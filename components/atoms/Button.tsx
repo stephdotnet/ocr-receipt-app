@@ -6,7 +6,7 @@ interface ButtonPops {
   style?: object;
 }
 
-export default function Button({ children, onPress = null, style = {} }: ButtonPops) {
+export default function Button({ children, onPress, style = {} }: ButtonPops) {
   const onPressHandler = (event: GestureResponderEvent) => {
     if (onPress) {
       onPress(event);
