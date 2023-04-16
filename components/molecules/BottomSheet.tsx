@@ -1,6 +1,6 @@
+import { forwardRef, useCallback } from 'react';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { BottomSheetDefaultBackdropProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
-import { forwardRef, useCallback } from 'react';
 
 interface BottomSheetProps extends React.ComponentProps<typeof BottomSheet> {
   snapPoints: string[];

@@ -1,16 +1,16 @@
-import { Image, StyleSheet, View } from 'react-native';
-import { Link, Stack } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { MaterialIcons } from '@expo/vector-icons';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import MainContainer from '@/components/layout/MainContainer';
-import * as ImagePicker from 'expo-image-picker';
-import BottomSheet from '@/components/molecules/BottomSheet';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
-import { getFileName } from '@/utils/files';
+import { useTranslation } from 'react-i18next';
+import { Image, StyleSheet, View } from 'react-native';
 import { Button, Chip } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import { Link, Stack } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
+import MainContainer from '@/components/layout/MainContainer';
+import BottomSheet from '@/components/molecules/BottomSheet';
+import { getFileName } from '@/utils/files';
+import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 export default function Home() {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset | null>(null);
@@ -25,7 +25,7 @@ export default function Home() {
 
   const openPicker = async () => {
     setError(null);
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       quality: 0.9,

@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { Button, Image, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { ThemeProvider } from 'styled-components';
+import { MaterialIcons } from '@expo/vector-icons';
 import HeaderRight from '@/components/layout/HeaderRight';
 import i18nInit from '@/utils/localisation/i18n';
 import theme from '@/utils/theme';
+import { ThemeProvider } from 'styled-components';
 
 i18nInit();
 

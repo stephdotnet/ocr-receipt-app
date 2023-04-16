@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 import styled from 'styled-components';
-import { color, ColorProps, typography, TypographyProps } from 'styled-system';
+import { ColorProps, TypographyProps, color, typography } from 'styled-system';
 
 export type TextProps = ColorProps & TypographyProps;
 
