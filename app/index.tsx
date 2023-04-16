@@ -1,10 +1,8 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button, Chip } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import { Link, Stack } from 'expo-router';
-import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
@@ -51,6 +49,12 @@ export default function Home() {
               <Box py={3} alignItems="center">
                 <Text style={styles.caption}>{t('home.caption')}</Text>
               </Box>
+              {error && (
+                <Box py={3} alignItems="center">
+                  <Text style={styles.caption}>{error}</Text>
+                </Box>
+              )}
+
               <Button style={styles.button} onPress={openBottomSheet}>
                 <Text fontWeight="bold">{t('home.upload.cta')}</Text>
               </Button>

@@ -1,4 +1,4 @@
-import { Button, Image, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 

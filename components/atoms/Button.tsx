@@ -1,4 +1,4 @@
-import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface ButtonPops {
   children: React.ReactNode;

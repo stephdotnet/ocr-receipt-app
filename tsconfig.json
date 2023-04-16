@@ -4,6 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "strictNullChecks": true,
     "paths": {
       "@/*": ["./*"],
       "@hooks/*": ["./hooks/*"],
