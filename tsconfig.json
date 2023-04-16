@@ -1,0 +1,18 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "paths": {
+      "@/*": ["./*"],
+      "@hooks/*": ["./hooks/*"],
+      "@css/*": ["./assets/css/*"],
+      "@pages/*": ["./pages/*"],
+      "@components/*": ["./components/*"],
+      "@layouts/*": ["./layouts/*"],
+      "@types/*": ["./types/*"],
+      "@utils/*": ["./utils/*"]
+    }    
+  }
+}
