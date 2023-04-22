@@ -5,6 +5,7 @@ const pages = {
   'home.caption': 'Scannez ou importez votre ticket de caisse.',
   'home.file.error': "Une erreur est survenue lors de l'importation du fichier.",
   'home.upload.from_gallery': 'Charger depuis la gallerie',
+  'home.upload.from_camera': 'Prendre en photo',
   'home.upload.cta': 'Ajouter un fichier',
   'home.send.caption': 'Envoyez votre ticket de caisse pour analyse.',
   'home.send.cta': 'Envoyer',

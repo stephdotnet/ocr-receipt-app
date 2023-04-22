@@ -7,6 +7,7 @@ import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
 import BottomSheet from '@/components/molecules/BottomSheet';
+import ReceiptsList from '@/components/organisms/ReceiptsList';
 import { getFileName } from '@/utils/files';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
@@ -40,6 +41,8 @@ export default function Home() {
     }
   };
 
+  const openCamera = async () => {};
+
   return (
     <>
       <MainContainer style={{ justifyContent: 'center' }}>
@@ -47,11 +50,11 @@ export default function Home() {
           {!file ? (
             <>
               <Box py={3} alignItems="center">
-                <Text style={styles.caption}>{t('home.caption')}</Text>
+                <Text>{t('home.caption')}</Text>
               </Box>
               {error && (
                 <Box py={3} alignItems="center">
-                  <Text style={styles.caption}>{error}</Text>
+                  <Text>{error}</Text>
                 </Box>
               )}
 
@@ -77,11 +80,21 @@ export default function Home() {
             </>
           )}
         </Box>
+        <Box mt={2}>
+          <ReceiptsList count={3} />
+        </Box>
         <BottomSheet ref={bottomSheetRef} snapPoints={['25%']}>
           <Box py={3} alignItems="center">
-            <Button style={styles.button} onPress={openPicker}>
-              <Text fontWeight="bold">{t('home.upload.from_gallery')}</Text>
-            </Button>
+            <Box mb={3}>
+              <Button style={styles.button} onPress={openPicker}>
+                <Text>{t('home.upload.from_gallery')}</Text>
+              </Button>
+            </Box>
+            <Box>
+              <Button style={styles.button} onPress={openCamera}>
+                <Text>{t('home.upload.from_camera')}</Text>
+              </Button>
+            </Box>
           </Box>
         </BottomSheet>
       </MainContainer>
@@ -94,7 +107,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  caption: {},
   button: {
     borderColor: '#CCC',
     borderWidth: 2,

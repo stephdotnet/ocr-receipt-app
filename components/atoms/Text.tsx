@@ -1,10 +1,19 @@
 import { Text } from 'react-native';
 import styled from 'styled-components';
-import { ColorProps, TypographyProps, color, typography } from 'styled-system';
+import { ColorProps, TypographyProps, color, typography, variant } from 'styled-system';
 
-export type TextProps = ColorProps & TypographyProps;
+type Variants = 'bold' | 'thin';
 
-export default styled(Text)<TextProps>`
-  ${color}
-  ${typography}
-`;
+export type TextProps = ColorProps & TypographyProps & { variant?: Variants };
+
+export default styled(Text)<TextProps>(
+  color,
+  typography,
+  variant({
+    variants: {
+      bold: {
+        fontWeight: 'bold',
+      },
+    },
+  }),
+);
