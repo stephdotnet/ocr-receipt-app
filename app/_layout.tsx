@@ -49,8 +49,7 @@ export default function Layout() {
 
   return (
     <>
-      <StatusBar style="auto" />
-
+      <StatusBar style="light" />
       <GestureHandlerRootView style={{ flex: 1, flexGrow: 1 }}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>

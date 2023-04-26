@@ -1,43 +1,55 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
-import { Button, Chip } from 'react-native-paper';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
+import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
 import BottomSheet from '@/components/molecules/BottomSheet';
+import UploadCTA from '@/components/molecules/UploadCTA';
 import ReceiptsList from '@/components/organisms/ReceiptsList';
+import useFilePicker from '@/hooks/api/useFilePicker';
+import { useGetReceipts } from '@/hooks/api/useGetReceipts';
+import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { getFileName } from '@/utils/files';
+import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
+
+interface errors {
+  file: string[];
+}
 
 export default function Home() {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const { t } = useTranslation();
+  const [errors, setErrors] = useState<errors | null>(null);
   const bottomSheetRef = useRef<BottomSheetType>(null);
 
-  const openBottomSheet = useCallback(() => {
-    bottomSheetRef.current?.expand();
-  }, []);
+  const { progress, isLoading, mutate } = useUploadReceipt();
+  const { openPicker } = useFilePicker(setErrors, setFile, bottomSheetRef);
+  const { isFetching, refetch } = useGetReceipts();
+  const { t } = useTranslation();
 
-  const openPicker = async () => {
-    setError(null);
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 0.9,
-    });
-
-    if (!result.canceled) {
-      bottomSheetRef.current?.close();
-
-      if (result?.assets?.length) {
-        setFile(result.assets[0]);
-      } else {
-        setError(t('home.file.error'));
-      }
+  const handleFileUpload = () => {
+    if (file) {
+      setErrors(null);
+      mutate(file, {
+        onError: (error: any) => {
+          if (error?.response?.validationErrors) {
+            setFile(null);
+            setErrors(error?.response?.validationErrors);
+          } else {
+            setErrors({
+              file: [t('home.file.error')],
+            });
+          }
+        },
+        onSuccess: () => {
+          // @todo notify if duplicate
+          // @todo Redirect to receipt details
+          setFile(null);
+        },
+      });
     }
   };
 
@@ -46,53 +58,53 @@ export default function Home() {
   return (
     <>
       <MainContainer style={{ justifyContent: 'center' }}>
-        <Box style={{ marginTop: -50 }}>
-          {!file ? (
-            <>
-              <Box py={3} alignItems="center">
-                <Text>{t('home.caption')}</Text>
-              </Box>
-              {error && (
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
+          <Box style={{ marginTop: -50 }}>
+            {!file ? (
+              <UploadCTA bottomSheetRef={bottomSheetRef} />
+            ) : (
+              <>
                 <Box py={3} alignItems="center">
-                  <Text>{error}</Text>
+                  <Text>{t('home.send.caption')}</Text>
                 </Box>
-              )}
-
-              <Button style={styles.button} onPress={openBottomSheet}>
-                <Text fontWeight="bold">{t('home.upload.cta')}</Text>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Box py={3} alignItems="center">
-                <Text>{t('home.send.caption')}</Text>
-              </Box>
-              <Chip closeIcon="close" onClose={() => setFile(null)} style={{ marginBottom: 32 }}>
-                {getFileName(file.uri)}
-              </Chip>
-              <Button
-                mode="contained"
-                loading={true}
-                contentStyle={{ flexDirection: 'row-reverse' }}
-              >
-                {t('home.send.cta')}
-              </Button>
-            </>
+                <Chip closeIcon="close" onClose={() => setFile(null)} style={{ marginBottom: 32 }}>
+                  {getFileName(file.uri)}
+                </Chip>
+                <Box mb={2}>{isLoading && <ProgressBar progress={progress} />}</Box>
+                <Button
+                  mode="contained"
+                  loading={isLoading}
+                  disabled={isLoading}
+                  contentStyle={{ flexDirection: 'row-reverse' }}
+                  onPress={handleFileUpload}
+                >
+                  {t('home.send.cta')}
+                </Button>
+              </>
+            )}
+          </Box>
+          {errors?.file && (
+            <Box py={3} alignItems="center">
+              <Text>{dataGetValue(errors, 'file.0')}</Text>
+            </Box>
           )}
-        </Box>
-        <Box mt={2}>
-          <ReceiptsList count={3} />
-        </Box>
-        <BottomSheet ref={bottomSheetRef} snapPoints={['25%']}>
+          <Box mt={2}>
+            <ReceiptsList count={3} />
+          </Box>
+        </ScrollView>
+        <BottomSheet ref={bottomSheetRef} snapPoints={['50%']}>
           <Box py={3} alignItems="center">
             <Box mb={3}>
-              <Button style={styles.button} onPress={openPicker}>
-                <Text>{t('home.upload.from_gallery')}</Text>
+              <Button style={styles.button} mode="contained" onPress={openPicker}>
+                {t('home.upload.from_gallery')}
               </Button>
             </Box>
             <Box>
-              <Button style={styles.button} onPress={openCamera}>
-                <Text>{t('home.upload.from_camera')}</Text>
+              <Button style={styles.button} mode="contained" onPress={openCamera}>
+                {t('home.upload.from_camera')}
               </Button>
             </Box>
           </Box>
@@ -108,7 +120,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   button: {
-    borderColor: '#CCC',
-    borderWidth: 2,
+    minHeight: 43,
+  },
+  scrollView: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

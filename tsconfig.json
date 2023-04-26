@@ -1,19 +1,21 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
     "paths": {
       "@/*": ["./*"],
-      "@hooks/*": ["./hooks/*"],
-      "@css/*": ["./assets/css/*"],
-      "@pages/*": ["./pages/*"],
-      "@components/*": ["./components/*"],
-      "@layouts/*": ["./layouts/*"],
-      "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
+      "@/hooks/*": ["./hooks/*"],
+      "@/css/*": ["./assets/css/*"],
+      "@/pages/*": ["./pages/*"],
+      "@/components/*": ["./components/*"],
+      "@/layouts/*": ["./layouts/*"],
+      "@/types/*": ["./types/*"],
+      "@/utils/*": ["./utils/*"]
     }    
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
 }

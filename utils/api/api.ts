@@ -1,4 +1,4 @@
-import { env } from '@/utils/system';
+import { dataGetValue, env } from '@/utils/system';
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const axios = Axios.create({
@@ -14,6 +14,17 @@ axios.interceptors.response.use(null, (error) => {
       return axios(error.config);
     });
   }
+
+  if (dataGetValue(error, 'response.data.data.errors')) {
+    error = {
+      ...error,
+      response: {
+        ...error.response,
+        validationErrors: error.response.data.data.errors,
+      },
+    };
+  }
+
   return Promise.reject(error);
 });
 
@@ -39,7 +50,7 @@ interface ApiClientType {
 
 export const apiClient: ApiClientType = {
   get: (route, config) => axios.get(route, { signal: config?.signal, params: config?.params }),
-  post: (route, data, config) => axios.post(route, data, { signal: config?.signal }),
+  post: (route, data, config) => axios.post(route, data, { signal: config?.signal, ...config }),
   put: (route, data, config) => axios.put(route, data, { signal: config?.signal }),
   patch: (route, data, config) => axios.patch(route, data, { signal: config?.signal }),
   delete: (route, config) => axios.delete(route, { signal: config?.signal }),

@@ -3,21 +3,18 @@ import receipts from '@/utils/api/receipts';
 import { QueryKey, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-const QUERY_KEY_PLAYLISTS = 'receipts';
-const QUERY_KEY_PLAYLIST = 'receipt';
+const QUERY_KEY_RECEIPTS = 'receipts';
+const QUERY_KEY_RECEIPT = 'receipt';
 
 export function getQueryKeyList(page?: number): QueryKey {
   if (page === undefined) {
-    return [QUERY_KEY_PLAYLISTS];
+    page = 1;
   }
-  return [QUERY_KEY_PLAYLISTS, page];
+  return [QUERY_KEY_RECEIPTS, page];
 }
 
-export function getQueryKeyShow(id?: string): QueryKey {
-  if (id === undefined) {
-    return [QUERY_KEY_PLAYLIST];
-  }
-  return [QUERY_KEY_PLAYLIST, id];
+export function getQueryKeyShow(id: string): QueryKey {
+  return [QUERY_KEY_RECEIPT, id];
 }
 
 export function useGetReceipts() {

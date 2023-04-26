@@ -1,20 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 export default function ReceiptDetails() {
   const router = useRouter();
   return (
-    <>
-      <View style={styles.container}>
-        <Text
-          onPress={() => {
-            router.back();
-          }}
-        >
-          RECEIPTS
-        </Text>
-      </View>
-    </>
+    <View style={styles.container}>
+      <Text
+        onPress={() => {
+          router.back();
+        }}
+      >
+        RECEIPTS
+      </Text>
+    </View>
   );
 }
 

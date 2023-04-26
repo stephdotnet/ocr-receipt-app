@@ -7,7 +7,7 @@ export default function HeaderRight() {
 
   return (
     <TouchableOpacity onPress={() => router.push('login')}>
-      <MaterialIcons name="account-circle" size={40} color="black" />
+      <MaterialIcons name="account-circle" size={40} color="white" />
     </TouchableOpacity>
   );
 }

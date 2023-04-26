@@ -4,6 +4,7 @@ export interface Receipt {
   store: string;
   OCRData: ReceiptData;
   created_at: string;
+  recently_created: boolean;
 }
 
 interface ReceiptData {

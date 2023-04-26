@@ -1,3 +1,4 @@
+import { format as prettyFormat } from 'pretty-format';
 import envvars from '../env';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,7 +24,19 @@ export function dataGetValue(object: Haystack, key: string | number, defaultValu
       }, object);
 
     return typeof resolved !== 'undefined' ? resolved : defaultValue;
-  } catch (error) {
+  } catch {
     return defaultValue;
   }
+}
+
+export function dump(value: any) {
+  console.log(prettyFormat(value));
+}
+
+export function dumpError(error: any) {
+  const errorDetailed = Object.keys(error).map((key) => {
+    return { [key]: error[key] };
+  });
+
+  dump(errorDetailed);
 }
