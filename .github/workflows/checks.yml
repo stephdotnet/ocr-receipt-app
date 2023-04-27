@@ -18,4 +18,6 @@ jobs:
         run: npm run lint
 
       - name: Run TypeScript compiler
-        run: npx tsc
+        run: |
+          cp env.ts.example env.ts
+          npx tsc
