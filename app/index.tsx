@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
@@ -24,6 +25,7 @@ export default function Home() {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [errors, setErrors] = useState<errors | null>(null);
   const bottomSheetRef = useRef<BottomSheetType>(null);
+  const router = useRouter();
 
   const { progress, isLoading, mutate } = useUploadReceipt();
   const { openPicker } = useFilePicker(setErrors, setFile, bottomSheetRef);
@@ -44,10 +46,10 @@ export default function Home() {
             });
           }
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
           // @todo notify if duplicate
-          // @todo Redirect to receipt details
           setFile(null);
+          router.push(`/receipts/${data.id}`);
         },
       });
     }
@@ -95,9 +97,9 @@ export default function Home() {
             <ReceiptsList count={3} />
           </Box>
         </ScrollView>
-        <BottomSheet ref={bottomSheetRef} snapPoints={['50%']}>
+        <BottomSheet ref={bottomSheetRef}>
           <Box py={3} alignItems="center">
-            <Box mb={3}>
+            <Box mb={2}>
               <Button style={styles.button} mode="contained" onPress={openPicker}>
                 {t('home.upload.from_gallery')}
               </Button>

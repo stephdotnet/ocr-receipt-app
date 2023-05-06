@@ -1,4 +1,9 @@
-const system = {};
+const system = {
+  'system.save': 'Enregister',
+  'system.delete': 'Supprimer',
+  'system.confirm': 'Confirmer',
+  'system.cancel': 'Annuler',
+};
 
 const pages = {
   'home.title': 'OCR Receipt',
@@ -9,6 +14,10 @@ const pages = {
   'home.upload.cta': 'Ajouter un fichier',
   'home.send.caption': 'Envoyez votre ticket de caisse pour analyse.',
   'home.send.cta': 'Envoyer',
+  'receipt.no_found': 'Aucun ticket de caisse trouvé.',
+  'receipt.date_caption': 'Le {{date}}',
+  'product.dialog.delete.title': 'Confirmation de suppression',
+  'product.dialog.delete.content': 'Etes-vous sûr de vouloir supprimer ce produit ?',
 };
 
 export default {

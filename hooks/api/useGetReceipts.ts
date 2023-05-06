@@ -14,7 +14,7 @@ export function getQueryKeyList(page?: number): QueryKey {
 }
 
 export function getQueryKeyShow(id: string): QueryKey {
-  return [QUERY_KEY_RECEIPT, id];
+  return [QUERY_KEY_RECEIPT, parseInt(id, 10)];
 }
 
 export function useGetReceipts() {

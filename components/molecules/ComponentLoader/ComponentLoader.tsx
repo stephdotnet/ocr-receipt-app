@@ -47,3 +47,19 @@ export const withReactQuery = function <T extends object>(
     );
   };
 };
+
+export const withLoadingState = function <T extends object>(
+  WrappedComponent: React.ComponentType<T>,
+  loadingComponent?: JSX.Element,
+  errorComponent?: JSX.Element,
+) {
+  return function (props: any) {
+    return props.isLoading ? (
+      loadingComponent ?? <LoadingDefaultComponent />
+    ) : props.hasError ? (
+      errorComponent ?? <ErrorDefaultComponent />
+    ) : (
+      <WrappedComponent {...(props as T)} />
+    );
+  };
+};

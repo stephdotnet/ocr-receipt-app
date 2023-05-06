@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Receipt } from '@/types/Receipts';
 import receipts from '@/utils/api/receipts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getQueryKeyList } from './useGetReceipts';
+import { getQueryKeyList, getQueryKeyShow } from './useGetReceipts';
 
 export default function useUploadReceipt() {
   const [progress, setProgress] = useState(0);
@@ -36,6 +36,7 @@ export default function useUploadReceipt() {
         const allReceipts = oldReceipts ?? [data];
 
         queryClient.setQueryData<Receipt[]>(getQueryKeyList(), allReceipts);
+        queryClient.setQueryData<Receipt>(getQueryKeyShow(data.id), data);
       }
     },
     onSettled: async () => {

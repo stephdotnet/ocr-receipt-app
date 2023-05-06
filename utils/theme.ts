@@ -1,3 +1,5 @@
+import { MD3Colors } from 'react-native-paper';
+
 export default {
   colors: {
     black: '#1F1F1F',
@@ -6,6 +8,7 @@ export default {
     white: '#fff',
     blue: '#007ce0',
     navy: '#004175',
+    ...MD3Colors,
   },
   space: [0, 4, 8, 16, 32, 64],
   fontSizes: [12, 14, 16, 20, 24, 36],

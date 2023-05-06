@@ -15,7 +15,7 @@ interface getPlaylistsFunction {
   (page?: number, options?: ReceiptsRequestOptions): Promise<Receipt[]>;
 }
 
-const ENDPOINT = 'ocr-scans';
+const ENDPOINT = 'receipts';
 
 const get: getPlaylistsFunction = async (page, options) => {
   const response: AxiosResponse<receiptsHttpResponse> = await apiClient.get(ENDPOINT, {
@@ -32,10 +32,6 @@ interface getReceiptFunction {
 
 const show: getReceiptFunction = async (id, options) => {
   const response: AxiosResponse<receiptHttpResponse> = await apiClient.get(`${ENDPOINT}/${id}`, {
-    params: {
-      limit: dataGetValue(options, 'limit', 50),
-      page: dataGetValue(options, 'page', 1),
-    },
     signal: options?.signal,
   });
 

@@ -65,12 +65,15 @@ export default function Layout() {
                   headerTitleStyle: {
                     fontWeight: 'bold',
                   },
+                  contentStyle: {
+                    backgroundColor: theme.colors.lightGrey,
+                  },
                 }}
               >
                 <Stack.Screen name="index" options={{ title: 'Overview' }} />
                 <Stack.Screen name="login" options={{ title: 'Login' }} />
                 <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
-                <Stack.Screen name="receipts/[receipt]" options={{ title: 'Receipt' }} />
+                <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
               </Stack>
             </PaperProvider>
           </QueryClientProvider>

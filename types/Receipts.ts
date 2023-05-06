@@ -1,17 +1,20 @@
 export interface Receipt {
   id: string;
   hash: string;
-  store: string;
-  OCRData: ReceiptData;
+  store: Store;
+  products: Product[];
   created_at: string;
+  invoice_date: string;
   recently_created: boolean;
 }
 
-interface ReceiptData {
-  products: Product[];
+interface Store {
+  id: string;
+  name: string;
 }
 
-interface Product {
+export interface Product {
+  id: string;
   name: string;
   price: string;
 }
