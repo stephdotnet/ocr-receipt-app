@@ -20,6 +20,7 @@ module.exports = function (api) {
         },
       ],
       'react-native-paper/babel',
+      '@babel/plugin-proposal-export-namespace-from',
       'react-native-reanimated/plugin',
     ],
   };

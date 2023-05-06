@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 interface MainContainerProps {
   children: React.ReactNode;
@@ -6,7 +6,7 @@ interface MainContainerProps {
 }
 
 export default function MainContainer({ children, style = {} }: MainContainerProps) {
-  return <View style={[styles.container, style]}>{children}</View>;
+  return <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>;
 }
 
 const styles = StyleSheet.create({

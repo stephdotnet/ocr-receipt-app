@@ -9,6 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import HeaderRight from '@/components/layout/HeaderRight';
 import i18nInit from '@/utils/localisation/i18n';
 import theme from '@/utils/theme';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
 
 i18nInit();
@@ -16,6 +17,14 @@ i18nInit();
 function cacheFonts(fonts: (typeof MaterialIcons.font)[]) {
   return fonts.map((font) => Font.loadAsync(font));
 }
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+    },
+  },
+});
 
 export default function Layout() {
   const [isReady, setIsReady] = React.useState(false);
@@ -40,28 +49,34 @@ export default function Layout() {
 
   return (
     <>
-      <StatusBar style="auto" />
-
+      <StatusBar style="light" />
       <GestureHandlerRootView style={{ flex: 1, flexGrow: 1 }}>
         <ThemeProvider theme={theme}>
-          <PaperProvider>
-            <Stack
-              initialRouteName="index"
-              screenOptions={{
-                headerRight: () => <HeaderRight />,
-                headerStyle: {
-                  backgroundColor: '#f4511e',
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-              }}
-            >
-              <Stack.Screen name="index" options={{ title: 'Overview' }} />
-              <Stack.Screen name="login" options={{ title: 'Login' }} />
-            </Stack>
-          </PaperProvider>
+          <QueryClientProvider client={queryClient}>
+            <PaperProvider>
+              <Stack
+                initialRouteName="index"
+                screenOptions={{
+                  headerRight: () => <HeaderRight />,
+                  headerStyle: {
+                    backgroundColor: theme.colors.black,
+                  },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                  },
+                  contentStyle: {
+                    backgroundColor: theme.colors.lightGrey,
+                  },
+                }}
+              >
+                <Stack.Screen name="index" options={{ title: 'Overview' }} />
+                <Stack.Screen name="login" options={{ title: 'Login' }} />
+                <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
+                <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
+              </Stack>
+            </PaperProvider>
+          </QueryClientProvider>
         </ThemeProvider>
       </GestureHandlerRootView>
     </>
