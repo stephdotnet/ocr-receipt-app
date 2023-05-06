@@ -28,7 +28,7 @@ export default function Home() {
   const router = useRouter();
 
   const { progress, isLoading, mutate } = useUploadReceipt();
-  const { openPicker } = useFilePicker(setErrors, setFile, bottomSheetRef);
+  const { openPicker, openCamera } = useFilePicker(setErrors, setFile, bottomSheetRef);
   const { isFetching, refetch } = useGetReceipts();
   const { t } = useTranslation();
 
@@ -37,14 +37,8 @@ export default function Home() {
       setErrors(null);
       mutate(file, {
         onError: (error: any) => {
-          if (error?.response?.validationErrors) {
-            setFile(null);
-            setErrors(error?.response?.validationErrors);
-          } else {
-            setErrors({
-              file: [t('home.file.error')],
-            });
-          }
+          setFile(null);
+          setErrors(error?.response?.validationErrors ?? { file: [t('home.file.error')] });
         },
         onSuccess: (data) => {
           // @todo notify if duplicate
@@ -54,8 +48,6 @@ export default function Home() {
       });
     }
   };
-
-  const openCamera = async () => {};
 
   return (
     <>
