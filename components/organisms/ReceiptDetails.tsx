@@ -27,7 +27,7 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
           date: parseAndFormatDate(data.invoice_date),
         })}
       </Text>
-      <Box mt={4}>
+      <Box mt={4} pb={4}>
         {data.products.map((data, id) => (
           <ProductCard data={data} key={id} handlePress={onProductPress} />
         ))}

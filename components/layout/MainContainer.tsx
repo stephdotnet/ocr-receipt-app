@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet } from 'react-native';
 
 interface MainContainerProps {
   children: React.ReactNode;
@@ -14,5 +14,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: '#EEEEEE',
+    ...Platform.select({
+      web: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        width: '100%',
+        maxWidth: '1200px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
+    }),
   },
 });

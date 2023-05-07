@@ -9,19 +9,25 @@ interface useFilePickerFunction {
     bottomSheetRef: React.RefObject<BottomSheet>,
   ): {
     openPicker: () => Promise<void>;
+    openCamera: () => Promise<void>;
   };
 }
 
 const useFilePicker: useFilePickerFunction = (setErrors, setFile, bottomSheetRef) => {
   const { t } = useTranslation();
 
-  const askPermission = async () => {
+  const askPickerPermission = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     return status !== 'denied';
   };
 
+  const askCameraPermission = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    return status !== 'denied';
+  };
+
   const openPicker = async () => {
-    if (!(await askPermission())) {
+    if (!(await askPickerPermission())) {
       setErrors({
         file: [t('Please accept permissions')],
       });
@@ -31,11 +37,14 @@ const useFilePicker: useFilePickerFunction = (setErrors, setFile, bottomSheetRef
 
     setErrors(null);
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.9,
     });
 
+    handleResult(result);
+  };
+
+  const handleResult = (result: ImagePicker.ImagePickerResult) => {
     if (!result.canceled) {
       bottomSheetRef.current?.close();
 
@@ -49,8 +58,26 @@ const useFilePicker: useFilePickerFunction = (setErrors, setFile, bottomSheetRef
     }
   };
 
+  const openCamera = async () => {
+    if (!(await askCameraPermission())) {
+      setErrors({
+        file: [t('Please accept permissions')],
+      });
+
+      return;
+    }
+
+    setErrors(null);
+    const pickerResult = await ImagePicker.launchCameraAsync({
+      quality: 0.9,
+    });
+
+    handleResult(pickerResult);
+  };
+
   return {
     openPicker,
+    openCamera,
   };
 };
 

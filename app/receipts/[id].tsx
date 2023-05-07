@@ -50,26 +50,25 @@ export default function ReceiptPage() {
 
   const handleDeleteConfirm = () => {
     if (receipt && selectedProduct) {
-      console.log('handleDeleteConfirm');
-      console.log(receipt);
-      console.log(selectedProduct);
       deleteMutation({ receipt, product: selectedProduct });
       setShowDialog(false);
     }
   };
 
   return (
-    <MainContainer>
+    <>
       <ScrollView
         style={styles.container}
         refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
       >
-        <ReceiptDetails
-          data={receipt}
-          isLoading={isLoading}
-          isError={isError}
-          onProductPress={handleProductPress}
-        />
+        <MainContainer>
+          <ReceiptDetails
+            data={receipt}
+            isLoading={isLoading}
+            isError={isError}
+            onProductPress={handleProductPress}
+          />
+        </MainContainer>
       </ScrollView>
       <BottomSheet ref={bottomSheetRef}>
         <Box mt={2}>
@@ -99,7 +98,7 @@ export default function ReceiptPage() {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-    </MainContainer>
+    </>
   );
 }
 
