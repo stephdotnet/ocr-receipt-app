@@ -10,8 +10,10 @@ import MainContainer from '@/components/layout/MainContainer';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
 import ReceiptsList from '@/components/organisms/ReceiptsList';
+import UploadHome from '@/components/organisms/UploadHome';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
+import { useStore } from '@/hooks/store';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
@@ -24,28 +26,9 @@ export default function Home() {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [errors, setErrors] = useState<errors | null>(null);
   const bottomSheetRef = useRef<BottomSheetType>(null);
-  const router = useRouter();
 
-  const { progress, isLoading, mutate } = useUploadReceipt();
+  const { user } = useStore();
   const { isFetching, refetch } = useGetReceipts();
-  const { t } = useTranslation();
-
-  const handleFileUpload = () => {
-    if (file) {
-      setErrors(null);
-      mutate(file, {
-        onError: (error: any) => {
-          setFile(null);
-          setErrors(error?.response?.validationErrors ?? { file: [t('home.file.error')] });
-        },
-        onSuccess: (data) => {
-          // @todo notify if duplicate
-          setFile(null);
-          router.push(`/receipts/${data.id}`);
-        },
-      });
-    }
-  };
 
   return (
     <>
@@ -54,38 +37,17 @@ export default function Home() {
           contentContainerStyle={styles.scrollView}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         >
-          <Box style={{ marginTop: -50 }}>
-            {!file ? (
-              <UploadCTA bottomSheetRef={bottomSheetRef} />
-            ) : (
-              <>
-                <Box py={3} alignItems="center">
-                  <Text>{t('home.send.caption')}</Text>
-                </Box>
-                <Chip closeIcon="close" onClose={() => setFile(null)} style={{ marginBottom: 32 }}>
-                  {getFileName(file.uri)}
-                </Chip>
-                <Box mb={2}>{isLoading && <ProgressBar progress={progress} />}</Box>
-                <Button
-                  mode="contained"
-                  loading={isLoading}
-                  disabled={isLoading}
-                  contentStyle={{ flexDirection: 'row-reverse' }}
-                  onPress={handleFileUpload}
-                >
-                  {t('home.send.cta')}
-                </Button>
-              </>
-            )}
-          </Box>
-          {errors?.file && (
-            <Box py={3} alignItems="center">
-              <Text>{dataGetValue(errors, 'file.0')}</Text>
-            </Box>
+          {user ? (
+            <UploadHome
+              errors={errors}
+              setErrors={setErrors}
+              file={file}
+              setFile={setFile}
+              bottomSheetRef={bottomSheetRef}
+            />
+          ) : (
+            <Button>Login</Button>
           )}
-          <Box mt={2}>
-            <ReceiptsList count={3} />
-          </Box>
         </ScrollView>
         <UploadChoicesBottomSheet
           bottomSheetRef={bottomSheetRef}

@@ -3,16 +3,16 @@ import { create } from 'zustand';
 
 interface Store {
   token: string | null;
-  setToken: (token: string) => void;
+  setToken: (token: string | null) => void;
   clearToken: () => void;
   user: Partial<User> | null;
-  setUserData: (data: Partial<User>) => void;
+  setUserData: (data: User | null) => void;
 }
 
 export const useStore = create<Store>((set) => ({
   token: null,
-  setToken: (token: string) => set(() => ({ token })),
+  setToken: (token) => set(() => ({ token: token })),
   clearToken: () => set(() => ({ token: null })),
   user: null,
-  setUserData: (data: Partial<User>) => set((state) => ({ user: { ...state.user, ...data } })),
+  setUserData: (data) => set(() => ({ user: data })),
 }));

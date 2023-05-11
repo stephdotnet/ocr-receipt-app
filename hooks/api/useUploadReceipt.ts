@@ -3,11 +3,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { Receipt } from '@/types/Receipts';
 import receipts from '@/utils/api/receipts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useStore } from '../store';
 import { getQueryKeyList, getQueryKeyShow } from './useGetReceipts';
 
 export default function useUploadReceipt() {
   const [progress, setProgress] = useState(0);
   const queryClient = useQueryClient();
+  const { token } = useStore();    
 
   const mutation = useMutation({
     onMutate: () => {
@@ -22,6 +24,7 @@ export default function useUploadReceipt() {
             setProgress(1);
           }
         },
+        token,
       });
     },
     onSuccess: async (data: Receipt) => {

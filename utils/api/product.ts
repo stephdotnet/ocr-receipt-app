@@ -5,6 +5,7 @@ import { apiClient } from './api';
 
 interface ProductsRequestOptions {
   signal?: AbortSignal;
+  token?: string | null;
 }
 
 interface deleteProductFunction {
@@ -19,6 +20,9 @@ const remove: deleteProductFunction = async (receipt, product, options) => {
     {
       params: { limit: dataGetValue(options, 'limit', 50) },
       signal: options?.signal,
+      headers: {
+        Authorization: `Bearer ${options?.token}`,
+      },
     },
   );
 

@@ -12,6 +12,8 @@ import i18nInit from '@/utils/localisation/i18n';
 import theme from '@/utils/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
+import { useSecureStorageToken } from '@/hooks/auth/useSecureStorageToken';
+import { useStore } from '@/hooks/store';
 
 i18nInit();
 
@@ -29,12 +31,20 @@ const queryClient = new QueryClient({
 
 export default function Layout() {
   const [isReady, setIsReady] = React.useState(false);
+  const { getToken } = useSecureStorageToken();
+  const { setToken } = useStore();
 
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
         cacheFonts([MaterialIcons.font]);
+
+        const token = await getToken();   
+        console.log('TOKEN RETRIEVED', token);
+        if(token) {
+          setToken(token);
+        }             
       } finally {
         setIsReady(true);
         SplashScreen.hideAsync();

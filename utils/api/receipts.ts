@@ -9,6 +9,7 @@ interface ReceiptsRequestOptions {
   limit?: number;
   signal?: AbortSignal;
   onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
+  token?: string | null;
 }
 
 interface getPlaylistsFunction {
@@ -21,6 +22,9 @@ const get: getPlaylistsFunction = async (page, options) => {
   const response: AxiosResponse<receiptsHttpResponse> = await apiClient.get(ENDPOINT, {
     params: { limit: dataGetValue(options, 'limit', 50), page: page ?? 1 },
     signal: options?.signal,
+    headers: {
+      Authorization: `Bearer ${options?.token}`,
+    },
   });
 
   return response.data.data;
@@ -33,6 +37,9 @@ interface getReceiptFunction {
 const show: getReceiptFunction = async (id, options) => {
   const response: AxiosResponse<receiptHttpResponse> = await apiClient.get(`${ENDPOINT}/${id}`, {
     signal: options?.signal,
+    headers: {
+      Authorization: `Bearer ${options?.token}`,
+    },
   });
 
   return response.data.data;
@@ -59,6 +66,7 @@ const send: sendReceiptFunction = async (file, options) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${options?.token}`,
     },
     ...options,
   });

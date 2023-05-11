@@ -57,9 +57,10 @@ interface ApiClientType {
 }
 
 export const apiClient: ApiClientType = {
-  get: (route, config) => axios.get(route, { signal: config?.signal, params: config?.params }),
+  get: (route, config) =>
+    axios.get(route, { signal: config?.signal, params: config?.params, ...config }),
   post: (route, data, config) => axios.post(route, data, { signal: config?.signal, ...config }),
-  put: (route, data, config) => axios.put(route, data, { signal: config?.signal }),
-  patch: (route, data, config) => axios.patch(route, data, { signal: config?.signal }),
-  delete: (route, config) => axios.delete(route, { signal: config?.signal }),
+  put: (route, data, config) => axios.put(route, data, { signal: config?.signal, ...config }),
+  patch: (route, data, config) => axios.patch(route, data, { signal: config?.signal, ...config }),
+  delete: (route, config) => axios.delete(route, { signal: config?.signal, ...config }),
 };

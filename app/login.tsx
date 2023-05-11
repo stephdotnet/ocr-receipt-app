@@ -57,11 +57,14 @@ export default function Details() {
               value={formik.values.email}
               onChangeText={formik.handleChange('email')}
               error={!!formik.errors.email}
+              autoCapitalize="none"
             />
           </Box>
-          <Box mt={2}>
-            <Text variant="error">{formik.errors.email}</Text>
-          </Box>
+          {formik.errors.email && (
+            <Box mt={2}>
+              <Text variant="error">{formik.errors.email}</Text>
+            </Box>
+          )}
         </Box>
         <Box mb={3}>
           <Box>
@@ -72,9 +75,11 @@ export default function Details() {
               error={!!formik.errors.password}
             />
           </Box>
-          <Box mt={2}>
-            <Text variant="error">{formik.errors.password}</Text>
-          </Box>
+          {formik.errors.password && (
+            <Box mt={2}>
+              <Text variant="error">{formik.errors.password}</Text>
+            </Box>
+          )}
         </Box>
         <Box>
           <Button
