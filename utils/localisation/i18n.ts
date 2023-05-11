@@ -19,6 +19,7 @@ const i18nInit = () => {
       compatibilityJSON: 'v3',
       resources,
       lng: 'fr',
+      returnNull: false,
       interpolation: {
         escapeValue: false, // react already safes from xss
       },

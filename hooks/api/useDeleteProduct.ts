@@ -11,7 +11,7 @@ interface MutationFnProps {
 export default function useDeleteProduct() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     onMutate: async ({ receipt, product }: MutationFnProps) => {
       await queryClient.cancelQueries(getQueryKeyShow(receipt.id));
       const receiptSnapshot = queryClient.getQueryData<Receipt>(getQueryKeyShow(receipt.id));
@@ -30,6 +30,4 @@ export default function useDeleteProduct() {
       queryClient.setQueryData(getQueryKeyShow(variables.receipt.id), context?.receiptSnapshot);
     },
   });
-
-  return { ...mutation };
 }

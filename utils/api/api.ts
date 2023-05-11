@@ -1,10 +1,18 @@
 import { dataGetValue, env } from '@/utils/system';
-import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const axios = Axios.create({
   baseURL: env('API_URL'),
   withCredentials: true,
 });
+
+export interface CustomAxiosError<T = any> extends AxiosError<T> {
+  response?: CustomAxiosResponse;
+}
+
+interface CustomAxiosResponse<T = any> extends AxiosResponse<T> {
+  validationErrors: Record<string, string[]>;
+}
 
 axios.interceptors.response.use(null, (error) => {
   if (error.response && error.response.status === 419) {
@@ -15,12 +23,12 @@ axios.interceptors.response.use(null, (error) => {
     });
   }
 
-  if (dataGetValue(error, 'response.data.data.errors')) {
+  if (dataGetValue(error, 'response.data.errors')) {
     error = {
       ...error,
       response: {
         ...error.response,
-        validationErrors: error.response.data.data.errors,
+        validationErrors: error.response.data.errors,
       },
     };
   }

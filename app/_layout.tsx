@@ -6,6 +6,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AuthProvider } from '@/components/layout/AuthProvider';
 import HeaderRight from '@/components/layout/HeaderRight';
 import i18nInit from '@/utils/localisation/i18n';
 import theme from '@/utils/theme';
@@ -30,17 +31,17 @@ export default function Layout() {
   const [isReady, setIsReady] = React.useState(false);
 
   useEffect(() => {
-    async function loadResourcesAndDatAsync() {
+    async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
-        await cacheFonts([MaterialIcons.font]);
+        cacheFonts([MaterialIcons.font]);
       } finally {
         setIsReady(true);
         SplashScreen.hideAsync();
       }
     }
 
-    loadResourcesAndDatAsync();
+    loadResourcesAndDataAsync();
   }, []);
 
   if (!isReady) {
@@ -54,27 +55,29 @@ export default function Layout() {
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <PaperProvider>
-              <Stack
-                initialRouteName="index"
-                screenOptions={{
-                  headerRight: () => <HeaderRight />,
-                  headerStyle: {
-                    backgroundColor: theme.colors.black,
-                  },
-                  headerTintColor: '#fff',
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                  },
-                  contentStyle: {
-                    backgroundColor: theme.colors.lightGrey,
-                  },
-                }}
-              >
-                <Stack.Screen name="index" options={{ title: 'Overview' }} />
-                <Stack.Screen name="login" options={{ title: 'Login' }} />
-                <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
-                <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
-              </Stack>
+              <AuthProvider>
+                <Stack
+                  initialRouteName="index"
+                  screenOptions={{
+                    headerRight: () => <HeaderRight />,
+                    headerStyle: {
+                      backgroundColor: theme.colors.black,
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                    },
+                    contentStyle: {
+                      backgroundColor: theme.colors.lightGrey,
+                    },
+                  }}
+                >
+                  <Stack.Screen name="index" options={{ title: 'Overview' }} />
+                  <Stack.Screen name="login" options={{ title: 'Login' }} />
+                  <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
+                  <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
+                </Stack>
+              </AuthProvider>
             </PaperProvider>
           </QueryClientProvider>
         </ThemeProvider>

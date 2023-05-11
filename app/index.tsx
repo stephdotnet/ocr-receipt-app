@@ -7,17 +7,16 @@ import { useRouter } from 'expo-router';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
-import BottomSheet from '@/components/molecules/BottomSheet';
 import UploadCTA from '@/components/molecules/UploadCTA';
+import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
 import ReceiptsList from '@/components/organisms/ReceiptsList';
-import useFilePicker from '@/hooks/api/useFilePicker';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
-interface errors {
+export interface errors {
   file: string[];
 }
 
@@ -28,7 +27,6 @@ export default function Home() {
   const router = useRouter();
 
   const { progress, isLoading, mutate } = useUploadReceipt();
-  const { openPicker, openCamera } = useFilePicker(setErrors, setFile, bottomSheetRef);
   const { isFetching, refetch } = useGetReceipts();
   const { t } = useTranslation();
 
@@ -89,20 +87,11 @@ export default function Home() {
             <ReceiptsList count={3} />
           </Box>
         </ScrollView>
-        <BottomSheet ref={bottomSheetRef}>
-          <Box py={3} alignItems="center">
-            <Box mb={2}>
-              <Button style={styles.button} mode="contained" onPress={openPicker}>
-                {t('home.upload.from_gallery')}
-              </Button>
-            </Box>
-            <Box>
-              <Button style={styles.button} mode="contained" onPress={openCamera}>
-                {t('home.upload.from_camera')}
-              </Button>
-            </Box>
-          </Box>
-        </BottomSheet>
+        <UploadChoicesBottomSheet
+          bottomSheetRef={bottomSheetRef}
+          setErrors={setErrors}
+          setFile={setFile}
+        />
       </MainContainer>
     </>
   );
@@ -112,9 +101,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     paddingHorizontal: 20,
-  },
-  button: {
-    minHeight: 43,
   },
   scrollView: {
     flex: 1,
