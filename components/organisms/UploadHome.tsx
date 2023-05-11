@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Chip, ProgressBar } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { errors } from '@/app';
 import { Box, Text } from '@/components/atoms';
@@ -7,17 +8,18 @@ import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
+import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import ReceiptsList from './ReceiptsList';
 
 interface props {
-  errors: errors;
-  setErrors: (errors: errors) => void;
+  errors: errors | null;
+  setErrors: (errors: errors | null) => void;
   file: ImagePicker.ImagePickerAsset | null;
   setFile: (file: ImagePicker.ImagePickerAsset | null) => void;
   bottomSheetRef: React.RefObject<BottomSheetType>;
 }
 
-export default function ({ errors, setErrors, file, setFile, bottomSheetRef }) {
+export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: props) {
   const { progress, isLoading, mutate } = useUploadReceipt();
   const router = useRouter();
   const { t } = useTranslation();
@@ -26,7 +28,7 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }) {
     if (file) {
       setErrors(null);
       mutate(file, {
-        onError: (error: any) => {
+        onError: (error) => {
           setFile(null);
           setErrors(error?.response?.validationErrors ?? { file: [t('home.file.error')] });
         },

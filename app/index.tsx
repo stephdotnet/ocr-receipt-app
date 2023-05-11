@@ -1,21 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
-import { Button, Chip, ProgressBar } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import { useRouter } from 'expo-router';
-import Box from '@/components/atoms/Box';
-import Text from '@/components/atoms/Text';
 import MainContainer from '@/components/layout/MainContainer';
-import UploadCTA from '@/components/molecules/UploadCTA';
 import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
-import ReceiptsList from '@/components/organisms/ReceiptsList';
 import UploadHome from '@/components/organisms/UploadHome';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
-import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { useStore } from '@/hooks/store';
-import { getFileName } from '@/utils/files';
-import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 export interface errors {

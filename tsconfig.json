@@ -8,6 +8,7 @@
     "strictNullChecks": true,
     "paths": {
       "@/*": ["./*"],
+      "@/app/*": ["./app/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/css/*": ["./assets/css/*"],
       "@/pages/*": ["./pages/*"],
