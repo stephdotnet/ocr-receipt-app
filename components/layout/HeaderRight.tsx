@@ -24,9 +24,16 @@ export default function HeaderRight() {
       {user ? (
         <Box>
           <TouchableOpacity onPress={handleLogout}>
-            <Text variant="title2" color="white">
-              Hi {user.name} <MaterialIcons name="logout" size={24} color="black" />
-            </Text>
+            <Box flexDirection="row" alignItems="center">
+              <Box>
+                <Text variant="title2" color="white">
+                  Hi {user.name} 
+                </Text>                
+              </Box>
+              <Box ml="2">
+                <MaterialIcons name="logout" size={24} color="white" />
+              </Box>
+            </Box>
           </TouchableOpacity>
         </Box>
       ) : (

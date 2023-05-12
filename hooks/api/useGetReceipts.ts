@@ -18,11 +18,11 @@ export function getQueryKeyShow(id: string): QueryKey {
   return [QUERY_KEY_RECEIPT, parseInt(id, 10)];
 }
 
-export function useGetReceipts() {
+export function useGetReceipts(enabled: boolean) {
   const { token } = useStore();  
-  console.log(token);  
   return useQuery<Receipt[], AxiosError>(getQueryKeyList(1), ({ signal }) =>
     receipts.get(1, { signal, token }),
+    {enabled : enabled}
   );
 };
 

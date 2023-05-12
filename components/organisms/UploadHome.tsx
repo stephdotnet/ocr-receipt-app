@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import { errors } from '@/app';
 import { Box, Text } from '@/components/atoms';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
@@ -10,10 +9,12 @@ import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import ReceiptsList from './ReceiptsList';
+import { CustomAxiosError } from '@/utils/api/api';
+import { Receipt } from '@/types/Receipts';
 
 interface props {
-  errors: errors | null;
-  setErrors: (errors: errors | null) => void;
+  errors: Record<string, string[]>  | null;
+  setErrors: (errors: Record<string, string[]>  | null) => void;
   file: ImagePicker.ImagePickerAsset | null;
   setFile: (file: ImagePicker.ImagePickerAsset | null) => void;
   bottomSheetRef: React.RefObject<BottomSheetType>;
@@ -28,11 +29,11 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
     if (file) {
       setErrors(null);
       mutate(file, {
-        onError: (error) => {
+        onError: (error: CustomAxiosError) => {
           setFile(null);
           setErrors(error?.response?.validationErrors ?? { file: [t('home.file.error')] });
         },
-        onSuccess: (data) => {
+        onSuccess: (data: Receipt) => {
           // @todo notify if duplicate
           setFile(null);
           router.push(`/receipts/${data.id}`);
