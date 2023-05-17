@@ -29,8 +29,10 @@ export function dataGetValue(object: Haystack, key: string | number, defaultValu
   }
 }
 
-export function dump(value: any) {
-  console.log(prettyFormat(value));
+export function dump(value: any, logInConsole = true) {
+  if (logInConsole) {
+    console.log(prettyFormat(value));
+  }
 }
 
 export function dumpError(error: any) {

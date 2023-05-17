@@ -69,12 +69,12 @@ export default function ReceiptPage() {
         </MainContainer>
       </ScrollView>
       <BottomSheet ref={bottomSheetRef}>
-        <Box mt={2}>
+        <Box mt="$2">
           <Text variant="title2" textAlign="center">
             {selectedProduct?.name}
           </Text>
         </Box>
-        <Box mt={3} mb={3} alignItems="center">
+        <Box my="$3" alignItems="center">
           <Box>
             <Button mode="outlined" textColor={theme.colors.error50} onPress={handleDeleteDialog}>
               {t('system.delete')}
@@ -84,12 +84,16 @@ export default function ReceiptPage() {
       </BottomSheet>
       <Portal>
         <Dialog visible={showDialog} onDismiss={handleHideDialog}>
-          <Dialog.Title>{t('product.dialog.delete.title')}</Dialog.Title>
+          <Dialog.Title style={{ fontSize: 18 }}>{t('product.dialog.delete.title')}</Dialog.Title>
           <Dialog.Content>
             <Text>{t('product.dialog.delete.content')}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button textColor={theme.colors.error50} onPress={handleDeleteConfirm}>
+            <Button
+              textColor={theme.colors.error50}
+              style={styles.button}
+              onPress={handleDeleteConfirm}
+            >
               {t('system.confirm')}
             </Button>
             <Button onPress={handleHideDialog}>{t('system.cancel')}</Button>
@@ -102,4 +106,7 @@ export default function ReceiptPage() {
 
 const styles = StyleSheet.create({
   container: {},
+  button: {
+    minHeight: 43,
+  },
 });

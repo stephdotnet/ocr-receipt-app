@@ -9,14 +9,9 @@ interface MutationFnProps {
   product: Product;
 }
 
-const getToken = () => {
-  const { token } = useStore();
-  return token;
-};
-
 export default function useDeleteProduct() {
   const queryClient = useQueryClient();
-  const { token } = useStore();    
+  const { token } = useStore();
 
   return useMutation({
     onMutate: async ({ receipt, product }: MutationFnProps) => {

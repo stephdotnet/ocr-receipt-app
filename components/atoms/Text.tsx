@@ -1,16 +1,9 @@
 import { Text } from 'react-native';
-import styled from 'styled-components';
-import { ColorProps, TypographyProps, color, typography, variant } from 'styled-system';
+import { GetProps, styled } from 'tamagui';
 
-type Variants = 'bold' | 'thin' | 'title1' | 'title2' | 'error';
-
-export type TextProps = ColorProps & TypographyProps & { variant?: Variants };
-
-export default styled(Text)<TextProps>(
-  color,
-  typography,
-  variant({
-    variants: {
+const TextComponent = styled(Text, {
+  variants: {
+    variant: {
       bold: {
         fontWeight: 'bold',
       },
@@ -25,8 +18,11 @@ export default styled(Text)<TextProps>(
         fontWeight: '300',
       },
       error: {
-        color: 'error50',
+        color: '$red10',
       },
     },
-  }),
-);
+  } as const,
+});
+
+export default TextComponent;
+export type TextProps = GetProps<typeof TextComponent>;

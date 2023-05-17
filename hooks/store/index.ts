@@ -11,7 +11,7 @@ interface Store {
 
 export const useStore = create<Store>((set) => ({
   token: null,
-  setToken: (token) => set(() => ({ token: token })),
+  setToken: (token) => set(() => ({ token })),
   clearToken: () => set(() => ({ token: null })),
   user: null,
   setUserData: (data) => set(() => ({ user: data })),

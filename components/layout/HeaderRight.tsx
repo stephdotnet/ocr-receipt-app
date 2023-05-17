@@ -7,16 +7,10 @@ import { useStore } from '@/hooks/store';
 
 export default function HeaderRight() {
   const router = useRouter();
-  const { user, token, setToken, setUserData } = useStore();
+  const { user, token } = useStore();
   const logout = useLogout();
   const handleLogout = () => {
-    token &&
-      logout.mutate(token, {
-        onSuccess: () => {
-          setToken(null);
-          setUserData(null);
-        },
-      });
+    token && logout.mutate(token);
   };
 
   return (
@@ -26,11 +20,11 @@ export default function HeaderRight() {
           <TouchableOpacity onPress={handleLogout}>
             <Box flexDirection="row" alignItems="center">
               <Box>
-                <Text variant="title2" color="white">
-                  Hi {user.name} 
-                </Text>                
+                <Text variant="title2" color="black">
+                  Hi {user.name}
+                </Text>
               </Box>
-              <Box ml="2">
+              <Box ml="$2">
                 <MaterialIcons name="logout" size={24} color="white" />
               </Box>
             </Box>

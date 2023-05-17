@@ -17,7 +17,7 @@ export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
 
   return (
     <>
-      <Box py={3} alignItems="center">
+      <Box py="$3" alignItems="center">
         <Text>{t('home.caption')}</Text>
       </Box>
       <Button mode="contained" onPress={openBottomSheet}>

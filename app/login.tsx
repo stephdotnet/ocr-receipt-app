@@ -7,8 +7,6 @@ import { PasswordInput } from '@/components/atoms/PasswordInput';
 import MainContainer from '@/components/layout/MainContainer';
 import { useLogin } from '@/hooks/api/useAuth';
 import { useCancelQueries } from '@/hooks/api/useCancelQueries';
-import { useSecureStorageToken } from '@/hooks/auth/useSecureStorageToken';
-import { useStore } from '@/hooks/store';
 import { CustomAxiosError } from '@/utils/api/api';
 import { useFormik } from 'formik';
 
@@ -21,12 +19,10 @@ export default function Details() {
   useCancelQueries();
   const { t } = useTranslation();
   const login = useLogin();
-  const { setToken: setStoreToken, setUserData } = useStore();
-  const { setToken } = useSecureStorageToken();
   const router = useRouter();
 
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: 'test@test.com', password: 'test' },
     onSubmit: (value) => handleFormSubmit(value),
   });
 
@@ -39,9 +35,7 @@ export default function Details() {
           );
       },
       onSuccess: async (data) => {
-        setStoreToken(data.token);
-        await setToken(data.token);
-        setUserData(data.user);
+        console.log('router push');
         router.push('/');
       },
     });
@@ -50,7 +44,7 @@ export default function Details() {
   return (
     <MainContainer style={styles.container}>
       <Box style={styles.form}>
-        <Box mb={3}>
+        <Box mb="$3">
           <Box>
             <TextInput
               label={t('login.email')}
@@ -61,12 +55,12 @@ export default function Details() {
             />
           </Box>
           {formik.errors.email && (
-            <Box mt={2}>
+            <Box mt="$2">
               <Text variant="error">{formik.errors.email}</Text>
             </Box>
           )}
         </Box>
-        <Box mb={3}>
+        <Box mb="$3">
           <Box>
             <PasswordInput
               label={t('login.password')}
@@ -76,7 +70,7 @@ export default function Details() {
             />
           </Box>
           {formik.errors.password && (
-            <Box mt={2}>
+            <Box mt="$2">
               <Text variant="error">{formik.errors.password}</Text>
             </Box>
           )}
