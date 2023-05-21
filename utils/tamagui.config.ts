@@ -46,8 +46,6 @@ export const tokens = createTokens({
   },
 });
 
-// console.log(tokens.color.black);
-
 const config = createTamagui({
   animations,
   defaultTheme: 'dark',

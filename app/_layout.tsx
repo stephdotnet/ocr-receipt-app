@@ -40,7 +40,11 @@ export default function Layout() {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
-        cacheFonts([MaterialIcons.font]);
+        cacheFonts([
+          MaterialIcons.font,
+          { Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf') },
+          { InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf') },
+        ]);
 
         const token = await getToken();
 
