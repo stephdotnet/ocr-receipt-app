@@ -5,16 +5,16 @@ import { useRouter } from 'expo-router';
 import { Box, Text } from '@/components/atoms';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
+import { Receipt } from '@/types/Receipts';
+import { CustomAxiosError } from '@/utils/api/api';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import ReceiptsList from './ReceiptsList';
-import { CustomAxiosError } from '@/utils/api/api';
-import { Receipt } from '@/types/Receipts';
 
 interface props {
-  errors: Record<string, string[]>  | null;
-  setErrors: (errors: Record<string, string[]>  | null) => void;
+  errors: Record<string, string[]> | null;
+  setErrors: (errors: Record<string, string[]> | null) => void;
   file: ImagePicker.ImagePickerAsset | null;
   setFile: (file: ImagePicker.ImagePickerAsset | null) => void;
   bottomSheetRef: React.RefObject<BottomSheetType>;

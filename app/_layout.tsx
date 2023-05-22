@@ -8,12 +8,12 @@ import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AuthProvider } from '@/components/layout/AuthProvider';
 import HeaderRight from '@/components/layout/HeaderRight';
+import { useSecureStorageToken } from '@/hooks/auth/useSecureStorageToken';
+import { useStore } from '@/hooks/store';
 import i18nInit from '@/utils/localisation/i18n';
 import theme from '@/utils/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
-import { useSecureStorageToken } from '@/hooks/auth/useSecureStorageToken';
-import { useStore } from '@/hooks/store';
 
 i18nInit();
 
@@ -40,11 +40,11 @@ export default function Layout() {
         SplashScreen.preventAutoHideAsync();
         cacheFonts([MaterialIcons.font]);
 
-        const token = await getToken();   
+        const token = await getToken();
         console.log('TOKEN RETRIEVED', token);
-        if(token) {
+        if (token) {
           setToken(token);
-        }             
+        }
       } finally {
         setIsReady(true);
         SplashScreen.hideAsync();
