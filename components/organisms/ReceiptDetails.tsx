@@ -3,9 +3,9 @@ import { handleProductPressType } from '@/app/receipts/[id]';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import { withLoadingState } from '@/components/molecules/ComponentLoader/ComponentLoader';
+import ProductCard from '@/components/molecules/ProductCard';
 import { Receipt } from '@/types/Receipts';
 import { parseAndFormatDate } from '@/utils/dates';
-import ProductCard from '../molecules/ProductCard';
 
 interface ProductsListProps {
   data: Receipt;
@@ -28,9 +28,9 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
         })}
       </Text>
       <Box mt={4} pb={4}>
-        {data.products.map((data, id) => (
-          <ProductCard data={data} key={id} handlePress={onProductPress} />
-        ))}
+        {data.products.map((data, id) => {
+          return <ProductCard data={data} key={data.id} handlePress={onProductPress} />;
+        })}
       </Box>
     </>
   );

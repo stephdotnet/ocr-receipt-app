@@ -9,7 +9,7 @@ import { getQueryKeyList, getQueryKeyShow } from './useGetReceipts';
 export default function useUploadReceipt() {
   const [progress, setProgress] = useState(0);
   const queryClient = useQueryClient();
-  const { token } = useStore();    
+  const { token } = useStore();
 
   const mutation = useMutation({
     onMutate: () => {

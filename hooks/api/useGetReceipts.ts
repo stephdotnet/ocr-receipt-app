@@ -19,16 +19,17 @@ export function getQueryKeyShow(id: string): QueryKey {
 }
 
 export function useGetReceipts(enabled: boolean) {
-  const { token } = useStore();  
-  return useQuery<Receipt[], AxiosError>(getQueryKeyList(1), ({ signal }) =>
-    receipts.get(1, { signal, token }),
-    {enabled : enabled}
+  const { token } = useStore();
+  return useQuery<Receipt[], AxiosError>(
+    getQueryKeyList(1),
+    ({ signal }) => receipts.get(1, { signal, token }),
+    { enabled },
   );
-};
+}
 
 export function useShowReceipt(id: string) {
-  const { token } = useStore();  
+  const { token } = useStore();
   return useQuery<Receipt, AxiosError>(getQueryKeyShow(id), ({ signal }) =>
     receipts.show(id, { signal, token }),
   );
-};
+}

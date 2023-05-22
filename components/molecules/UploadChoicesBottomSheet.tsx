@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import { errors } from '@/app';
 import { Box } from '@/components/atoms';
 import useFilePicker from '@/hooks/api/useFilePicker';
 import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
@@ -10,7 +9,7 @@ import BottomSheet from './BottomSheet';
 
 interface UploadChoicesBottomSheetProps {
   bottomSheetRef: React.RefObject<BottomSheetType>;
-  setErrors: React.Dispatch<React.SetStateAction<errors | null>>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string[]> | null>>;
   setFile: React.Dispatch<React.SetStateAction<ImagePicker.ImagePickerAsset | null>>;
 }
 
