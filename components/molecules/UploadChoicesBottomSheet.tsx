@@ -14,10 +14,10 @@ interface UploadChoicesBottomSheetProps {
 }
 
 export const UploadChoicesBottomSheet = ({
-                                           bottomSheetRef,
-                                           setErrors,
-                                           setFile,
-                                         }: UploadChoicesBottomSheetProps) => {
+  bottomSheetRef,
+  setErrors,
+  setFile,
+}: UploadChoicesBottomSheetProps) => {
   const { openPicker, openCamera } = useFilePicker(setErrors, setFile, bottomSheetRef);
   const { t } = useTranslation();
   return (
