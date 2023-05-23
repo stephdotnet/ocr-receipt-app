@@ -1,6 +1,7 @@
 import { Product, Receipt } from '@/types/Receipts';
 import productApi from '@/utils/api/product';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useStore } from '../store';
 import { getQueryKeyShow } from './useGetReceipts';
 
 interface MutationFnProps {
@@ -10,8 +11,9 @@ interface MutationFnProps {
 
 export default function useDeleteProduct() {
   const queryClient = useQueryClient();
+  const { token } = useStore();
 
-  const mutation = useMutation({
+  return useMutation({
     onMutate: async ({ receipt, product }: MutationFnProps) => {
       await queryClient.cancelQueries(getQueryKeyShow(receipt.id));
       const receiptSnapshot = queryClient.getQueryData<Receipt>(getQueryKeyShow(receipt.id));
@@ -24,12 +26,10 @@ export default function useDeleteProduct() {
       return { receiptSnapshot };
     },
     mutationFn: ({ receipt, product }: MutationFnProps) => {
-      return productApi.remove(receipt, product);
+      return productApi.remove(receipt, product, { token });
     },
     onError: (_, variables, context) => {
       queryClient.setQueryData(getQueryKeyShow(variables.receipt.id), context?.receiptSnapshot);
     },
   });
-
-  return { ...mutation };
 }

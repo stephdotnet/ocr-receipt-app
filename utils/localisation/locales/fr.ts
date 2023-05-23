@@ -3,6 +3,7 @@ const system = {
   'system.delete': 'Supprimer',
   'system.confirm': 'Confirmer',
   'system.cancel': 'Annuler',
+  'system.accept_permissions': 'Veuillez accepter les permissions',
 };
 
 const pages = {
@@ -18,6 +19,9 @@ const pages = {
   'receipt.date_caption': 'Le {{date}}',
   'product.dialog.delete.title': 'Confirmation de suppression',
   'product.dialog.delete.content': 'Etes-vous sûr de vouloir supprimer ce produit ?',
+  'login.email': 'Email',
+  'login.password': 'Mot de passe',
+  'login.submit': 'Se connecter',
 };
 
 export default {

@@ -6,16 +6,39 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
+    "allowJs": false,
     "paths": {
-      "@/*": ["./*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/css/*": ["./assets/css/*"],
-      "@/pages/*": ["./pages/*"],
-      "@/components/*": ["./components/*"],
-      "@/layouts/*": ["./layouts/*"],
-      "@/types/*": ["./types/*"],
-      "@/utils/*": ["./utils/*"]
-    }    
+      "@/*": [
+        "./*"
+      ],
+      "@/app/*": [
+        "./app/*"
+      ],
+      "@/hooks/*": [
+        "./hooks/*"
+      ],
+      "@/css/*": [
+        "./assets/css/*"
+      ],
+      "@/pages/*": [
+        "./pages/*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/layouts/*": [
+        "./layouts/*"
+      ],
+      "@/types/*": [
+        "./types/*"
+      ],
+      "@/utils/*": [
+        "./utils/*"
+      ]
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

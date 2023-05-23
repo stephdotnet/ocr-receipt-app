@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 import styled from 'styled-components';
 import { ColorProps, TypographyProps, color, typography, variant } from 'styled-system';
 
-type Variants = 'bold' | 'thin' | 'title1' | 'title2';
+type Variants = 'bold' | 'thin' | 'title1' | 'title2' | 'error';
 
 export type TextProps = ColorProps & TypographyProps & { variant?: Variants };
 
@@ -23,6 +23,9 @@ export default styled(Text)<TextProps>(
       thin: {
         fontSize: 14,
         fontWeight: '300',
+      },
+      error: {
+        color: 'error50',
       },
     },
   }),

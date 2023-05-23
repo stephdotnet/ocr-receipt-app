@@ -26,8 +26,6 @@ export default function ReceiptPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showDialog, setShowDialog] = useState(false);
 
-  console.log('ok');
-
   const { id } = useSearchParams<ReceiptSearchParams>();
   const { data: receipt, isLoading, isError, isFetching, refetch } = useShowReceipt(id as string);
   const { t } = useTranslation();

@@ -29,7 +29,7 @@ const useFilePicker: useFilePickerFunction = (setErrors, setFile, bottomSheetRef
   const openPicker = async () => {
     if (!(await askPickerPermission())) {
       setErrors({
-        file: [t('Please accept permissions')],
+        file: [t('system.accept_permissions')],
       });
 
       return;
@@ -61,7 +61,7 @@ const useFilePicker: useFilePickerFunction = (setErrors, setFile, bottomSheetRef
   const openCamera = async () => {
     if (!(await askCameraPermission())) {
       setErrors({
-        file: [t('Please accept permissions')],
+        file: [t('system.accept_permissions')],
       });
 
       return;
