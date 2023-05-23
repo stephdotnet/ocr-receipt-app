@@ -93,7 +93,7 @@ export default function Layout() {
                     <Stack.Screen name="login" options={{ title: 'Login' }} />
                     <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
                     <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
-                  </Stack>
+                  </Stack></AuthProvider>
                 </AuthProvider>
               </PaperProvider>
             </QueryClientProvider>
