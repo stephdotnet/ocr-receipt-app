@@ -18,9 +18,13 @@ import { TamaguiProvider, Theme } from 'tamagui';
 
 i18nInit();
 
-function cacheFonts(fonts: (typeof MaterialIcons.font)[]) {
-  return fonts.map((font) => Font.loadAsync(font));
-}
+const cacheFonts = async () => {
+  await Promise.all([
+    Font.loadAsync(MaterialIcons.font),
+    Font.loadAsync({ Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf') }),
+    Font.loadAsync({ InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf') }),
+  ]);
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,11 +44,8 @@ export default function Layout() {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
-        cacheFonts([
-          MaterialIcons.font,
-          { Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf') },
-          { InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf') },
-        ]);
+
+        await cacheFonts();
 
         const token = await getToken();
 

@@ -15,7 +15,7 @@ export default function Home() {
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
   const bottomSheetRef = useRef<BottomSheetType>(null);
 
-  const { user } = useStore();
+  const { user, token } = useStore();
   const router = useRouter();
   const { isFetching, refetch } = useGetReceipts(!!user);
 
@@ -28,7 +28,7 @@ export default function Home() {
             <RefreshControl refreshing={isFetching} onRefresh={refetch} enabled={!!user} />
           }
         >
-          {user ? (
+          {token ? (
             <UploadHome
               errors={errors}
               setErrors={setErrors}

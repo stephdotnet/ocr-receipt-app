@@ -2,7 +2,7 @@ import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Box, Text } from '@/components/atoms';
-import { useLogout } from '@/hooks/api/useAuth';
+import { useLogout, useMe } from '@/hooks/api/useAuth';
 import { useStore } from '@/hooks/store';
 
 export default function HeaderRight() {
@@ -12,6 +12,7 @@ export default function HeaderRight() {
   const handleLogout = () => {
     token && logout.mutate(token);
   };
+  const { isLoading } = useMe(token);
 
   return (
     <>
@@ -20,7 +21,7 @@ export default function HeaderRight() {
           <TouchableOpacity onPress={handleLogout}>
             <Box flexDirection="row" alignItems="center">
               <Box>
-                <Text variant="title2" color="black">
+                <Text variant="title2" color="white">
                   Hi {user.name}
                 </Text>
               </Box>
@@ -30,6 +31,10 @@ export default function HeaderRight() {
             </Box>
           </TouchableOpacity>
         </Box>
+      ) : isLoading ? (
+        <>
+          <Text>Loading</Text>
+        </>
       ) : (
         <TouchableOpacity onPress={() => router.push('login')}>
           <MaterialIcons name="account-circle" size={40} color="white" />

@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+import { User } from '@/types/User';
 import auth, { LoginRequestData } from '@/utils/api/auth';
-import { useMutation } from '@tanstack/react-query';
+import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios/index';
 import { useSecureStorageToken } from '../auth/useSecureStorageToken';
 import { useStore } from '../store';
 
@@ -30,4 +33,33 @@ export const useLogout = () => {
       setUserData(null);
     },
   });
+};
+
+const QUERY_KEY_ME = 'me';
+
+export function getQueryMe(): QueryKey {
+  return [QUERY_KEY_ME];
+}
+
+export const useMe = (token: string | null) => {
+  const { setUserData, setToken } = useStore();
+
+  const query = useQuery<User, AxiosError>(
+    getQueryMe(),
+    ({ signal }) => auth.me(token!, { signal }),
+    {
+      enabled: !!token,
+    },
+  );
+
+  useEffect(() => {
+    setUserData(query.data);
+
+    if (query.isError) {
+      setToken(null);
+      setUserData(null);
+    }
+  }, [query.data, query.isError]);
+
+  return query;
 };
