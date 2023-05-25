@@ -23,6 +23,7 @@ const cacheFonts = async () => {
     Font.loadAsync(MaterialIcons.font),
     Font.loadAsync({ Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf') }),
     Font.loadAsync({ InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf') }),
+    Font.loadAsync({ InterLight: require('@tamagui/font-inter/otf/Inter-Light.otf') }),
   ]);
 };
 

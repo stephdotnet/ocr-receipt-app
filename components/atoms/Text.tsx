@@ -13,9 +13,13 @@ const TextComponent = styled(Text, {
       title2: {
         fontSize: 22,
       },
+      title3: {
+        fontSize: 18,
+      },
       thin: {
         fontSize: 14,
-        fontWeight: '300',
+        fontWeight: 300,
+        fontFamily: 'InterLight',
       },
       error: {
         color: '$red10',
