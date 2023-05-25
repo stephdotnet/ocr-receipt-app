@@ -29,8 +29,6 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
       </Text>
       <Box mt="$4" pb="$4">
         {data.products.map((data, id) => {
-          console.log(data);
-
           return <ProductCard data={data} key={data.id} handlePress={onProductPress} />;
         })}
       </Box>

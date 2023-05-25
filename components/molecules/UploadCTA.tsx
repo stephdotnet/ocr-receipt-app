@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-paper';
 import { Box, Text } from '@/components/atoms';
+import { useStore } from '@/hooks/store';
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 interface UploadCTAProps {
@@ -10,6 +11,7 @@ interface UploadCTAProps {
 
 export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
   const { t } = useTranslation();
+  const { user } = useStore();
 
   const openBottomSheet = useCallback(() => {
     bottomSheetRef.current?.expand();
@@ -20,7 +22,7 @@ export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
       <Box py="$3" alignItems="center">
         <Text>{t('home.caption')}</Text>
       </Box>
-      <Button mode="contained" onPress={openBottomSheet}>
+      <Button mode="contained" onPress={openBottomSheet} disabled={!user}>
         <Text fontWeight="bold">{t('home.upload.cta')}</Text>
       </Button>
     </>

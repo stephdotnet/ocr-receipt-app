@@ -12,7 +12,7 @@ export default function HeaderRight() {
   const handleLogout = () => {
     token && logout.mutate(token);
   };
-  const { isLoading } = useMe(token);
+  const { isFetching } = useMe();
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function HeaderRight() {
           <TouchableOpacity onPress={handleLogout}>
             <Box flexDirection="row" alignItems="center">
               <Box>
-                <Text variant="title2" color="white">
+                <Text variant="title3" color="white">
                   Hi {user.name}
                 </Text>
               </Box>
@@ -31,9 +31,9 @@ export default function HeaderRight() {
             </Box>
           </TouchableOpacity>
         </Box>
-      ) : isLoading ? (
+      ) : isFetching ? (
         <>
-          <Text>Loading</Text>
+          <Text color="white">Loading</Text>
         </>
       ) : (
         <TouchableOpacity onPress={() => router.push('login')}>

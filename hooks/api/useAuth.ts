@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+import { useToken } from '@/hooks/auth/useToken';
 import { User } from '@/types/User';
 import auth, { LoginRequestData } from '@/utils/api/auth';
-import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { QueryKey, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios/index';
 import { useSecureStorageToken } from '../auth/useSecureStorageToken';
 import { useStore } from '../store';
@@ -41,21 +42,24 @@ export function getQueryMe(): QueryKey {
   return [QUERY_KEY_ME];
 }
 
-export const useMe = (token: string | null) => {
-  const { setUserData, setToken } = useStore();
-
+export const useMe = () => {
+  const { setUserData, token } = useStore();
+  const queryClient = useQueryClient();
+  const { setToken } = useToken();
   const query = useQuery<User, AxiosError>(
     getQueryMe(),
     ({ signal }) => auth.me(token!, { signal }),
     {
       enabled: !!token,
+      retry: false,
     },
   );
 
   useEffect(() => {
-    setUserData(query.data);
+    setUserData(query.data ?? null);
 
     if (query.isError) {
+      queryClient.cancelQueries(getQueryMe());
       setToken(null);
       setUserData(null);
     }

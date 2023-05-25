@@ -58,6 +58,7 @@ export default function ReceiptPage() {
       <ScrollView
         style={styles.container}
         refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <MainContainer>
           <ReceiptDetails
@@ -105,7 +106,9 @@ export default function ReceiptPage() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flexGrow: 1,
+  },
   button: {
     minHeight: 43,
   },
