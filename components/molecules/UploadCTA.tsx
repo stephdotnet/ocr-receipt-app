@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-paper';
 import { Box, Text } from '@/components/atoms';
+import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import { useStore } from '@/hooks/store';
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 interface UploadCTAProps {
-  bottomSheetRef: React.RefObject<BottomSheet>;
+  bottomSheetRef: React.RefObject<forwardRefProps>;
 }
 
 export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
@@ -14,7 +14,7 @@ export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
   const { user } = useStore();
 
   const openBottomSheet = useCallback(() => {
-    bottomSheetRef.current?.expand();
+    bottomSheetRef.current?.open();
   }, []);
 
   return (

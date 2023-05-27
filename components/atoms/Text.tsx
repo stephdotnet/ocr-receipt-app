@@ -4,9 +4,6 @@ import { GetProps, styled } from 'tamagui';
 const TextComponent = styled(Text, {
   variants: {
     variant: {
-      bold: {
-        fontWeight: 'bold',
-      },
       title1: {
         fontSize: 32,
       },

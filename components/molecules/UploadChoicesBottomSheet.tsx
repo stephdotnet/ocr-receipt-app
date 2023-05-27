@@ -4,11 +4,10 @@ import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { Box } from '@/components/atoms';
 import useFilePicker from '@/hooks/api/useFilePicker';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
-import BottomSheet from './BottomSheet';
+import BottomSheet, { forwardRefProps } from './BottomSheet';
 
 interface UploadChoicesBottomSheetProps {
-  bottomSheetRef: React.RefObject<BottomSheetType>;
+  bottomSheetRef: React.RefObject<forwardRefProps>;
   setErrors: React.Dispatch<React.SetStateAction<Record<string, string[]> | null>>;
   setFile: React.Dispatch<React.SetStateAction<ImagePicker.ImagePickerAsset | null>>;
 }

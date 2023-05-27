@@ -3,13 +3,13 @@ import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Box, Text } from '@/components/atoms';
+import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { Receipt } from '@/types/Receipts';
 import { CustomAxiosError } from '@/utils/api/api';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import ReceiptsList from './ReceiptsList';
 
 interface props {
@@ -17,7 +17,7 @@ interface props {
   setErrors: (errors: Record<string, string[]> | null) => void;
   file: ImagePicker.ImagePickerAsset | null;
   setFile: (file: ImagePicker.ImagePickerAsset | null) => void;
-  bottomSheetRef: React.RefObject<BottomSheetType>;
+  bottomSheetRef: React.RefObject<forwardRefProps>;
 }
 
 export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: props) {

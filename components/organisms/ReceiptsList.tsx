@@ -46,7 +46,7 @@ function ReceiptsList({ count, data }: ReceiptListProps) {
                   {t('receipt.date_caption', {
                     date: parseAndFormatDate(receipt.invoice_date),
                   })}{' '}
-                  <Text variant="bold">{receipt.products?.length} produits</Text>
+                  <Text fontWeight="bold">{receipt.products?.length} produits</Text>
                 </Text>
               </Box>
               <Box>

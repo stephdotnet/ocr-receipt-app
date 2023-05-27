@@ -29,7 +29,7 @@ export default function ProductCard({
           <Text>{data.name}</Text>
         </Box>
         <Box ml="$2">
-          <Text variant="bold">{Number(parseFloat(data.price).toFixed(2))} €</Text>
+          <Text fontWeight="bold">{Number(parseFloat(data.price).toFixed(2))} €</Text>
         </Box>
       </Box>
     </TouchableOpacity>
