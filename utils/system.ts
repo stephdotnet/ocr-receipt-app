@@ -1,5 +1,5 @@
 import { format as prettyFormat } from 'pretty-format';
-import envvars from '../env';
+import envvars from '../env.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Haystack = undefined | null | any[] | Record<string, any>;

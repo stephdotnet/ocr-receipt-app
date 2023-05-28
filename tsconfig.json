@@ -6,7 +6,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
-    "allowJs": false,
+    "allowJs": true,
     "paths": {
       "@/*": [
         "./*"
