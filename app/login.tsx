@@ -22,7 +22,7 @@ export default function Details() {
   const router = useRouter();
 
   const formik = useFormik({
-    initialValues: { email: 'test@test.com', password: 'test' },
+    initialValues: { email: '', password: '' },
     onSubmit: (value) => handleFormSubmit(value),
   });
 

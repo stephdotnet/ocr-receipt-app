@@ -68,6 +68,9 @@ const send: sendReceiptFunction = async (file, options) => {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${options?.token}`,
     },
+    transformRequest: (data, headers) => {
+      return formData; // this is doing the trick
+    },
     ...options,
   });
 

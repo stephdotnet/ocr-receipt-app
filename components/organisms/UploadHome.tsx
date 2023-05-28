@@ -69,7 +69,9 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
       </Box>
       {errors?.file && (
         <Box py="$3" alignItems="center">
-          <Text>{dataGetValue(errors, 'file.0')}</Text>
+          <Text variant="error" textAlign="center">
+            {dataGetValue(errors, 'file.0')}
+          </Text>
         </Box>
       )}
       <Box mt="$4">
