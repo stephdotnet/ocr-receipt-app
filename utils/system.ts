@@ -1,5 +1,5 @@
 import { format as prettyFormat } from 'pretty-format';
-import envvars from '../env';
+import envvars from '../env.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Haystack = undefined | null | any[] | Record<string, any>;
@@ -29,8 +29,10 @@ export function dataGetValue(object: Haystack, key: string | number, defaultValu
   }
 }
 
-export function dump(value: any) {
-  console.log(prettyFormat(value));
+export function dump(value: any, logInConsole = true) {
+  if (logInConsole) {
+    console.log(prettyFormat(value));
+  }
 }
 
 export function dumpError(error: any) {

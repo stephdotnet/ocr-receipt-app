@@ -6,13 +6,12 @@ import { Button, Dialog, Portal } from 'react-native-paper';
 import { useSearchParams } from 'expo-router';
 import { Box, Text } from '@/components/atoms';
 import MainContainer from '@/components/layout/MainContainer';
-import BottomSheet from '@/components/molecules/BottomSheet';
+import BottomSheet, { forwardRefProps } from '@/components/molecules/BottomSheet';
 import ReceiptDetails from '@/components/organisms/ReceiptDetails';
 import useDeleteProduct from '@/hooks/api/useDeleteProduct';
 import { useShowReceipt } from '@/hooks/api/useGetReceipts';
 import { Product } from '@/types/Receipts';
 import theme from '@/utils/theme';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 type ReceiptSearchParams = Record<string, string>;
 
@@ -21,7 +20,7 @@ export interface handleProductPressType {
 }
 
 export default function ReceiptPage() {
-  const bottomSheetRef = useRef<BottomSheetType>(null);
+  const bottomSheetRef = useRef<forwardRefProps>(null);
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showDialog, setShowDialog] = useState(false);
@@ -33,7 +32,7 @@ export default function ReceiptPage() {
 
   const handleProductPress: handleProductPressType = (product) => {
     setSelectedProduct(product);
-    bottomSheetRef.current?.expand();
+    bottomSheetRef.current?.open();
   };
 
   const handleDeleteDialog = () => {
@@ -43,7 +42,7 @@ export default function ReceiptPage() {
 
   const handleHideDialog = () => {
     setShowDialog(false);
-    bottomSheetRef.current?.expand();
+    bottomSheetRef.current?.open();
   };
 
   const handleDeleteConfirm = () => {
@@ -58,6 +57,7 @@ export default function ReceiptPage() {
       <ScrollView
         style={styles.container}
         refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <MainContainer>
           <ReceiptDetails
@@ -69,12 +69,12 @@ export default function ReceiptPage() {
         </MainContainer>
       </ScrollView>
       <BottomSheet ref={bottomSheetRef}>
-        <Box mt={2}>
-          <Text variant="title2" textAlign="center">
+        <Box mt="$2">
+          <Text variant="title2" textAlign="center" color="black">
             {selectedProduct?.name}
           </Text>
         </Box>
-        <Box mt={3} mb={3} alignItems="center">
+        <Box my="$3" alignItems="center">
           <Box>
             <Button mode="outlined" textColor={theme.colors.error50} onPress={handleDeleteDialog}>
               {t('system.delete')}
@@ -84,12 +84,16 @@ export default function ReceiptPage() {
       </BottomSheet>
       <Portal>
         <Dialog visible={showDialog} onDismiss={handleHideDialog}>
-          <Dialog.Title>{t('product.dialog.delete.title')}</Dialog.Title>
+          <Dialog.Title style={{ fontSize: 18 }}>{t('product.dialog.delete.title')}</Dialog.Title>
           <Dialog.Content>
             <Text>{t('product.dialog.delete.content')}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button textColor={theme.colors.error50} onPress={handleDeleteConfirm}>
+            <Button
+              textColor={theme.colors.error50}
+              style={styles.button}
+              onPress={handleDeleteConfirm}
+            >
               {t('system.confirm')}
             </Button>
             <Button onPress={handleHideDialog}>{t('system.cancel')}</Button>
@@ -101,5 +105,10 @@ export default function ReceiptPage() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flexGrow: 1,
+  },
+  button: {
+    minHeight: 43,
+  },
 });

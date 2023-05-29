@@ -29,7 +29,11 @@ export function useGetReceipts(enabled: boolean) {
 
 export function useShowReceipt(id: string) {
   const { token } = useStore();
-  return useQuery<Receipt, AxiosError>(getQueryKeyShow(id), ({ signal }) =>
-    receipts.show(id, { signal, token }),
+  return useQuery<Receipt, AxiosError>(
+    getQueryKeyShow(id),
+    ({ signal }) => receipts.show(id, { signal, token }),
+    {
+      enabled: !!id,
+    },
   );
 }

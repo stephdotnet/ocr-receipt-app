@@ -4,18 +4,18 @@ import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import MainContainer from '@/components/layout/MainContainer';
+import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
 import UploadHome from '@/components/organisms/UploadHome';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import { useStore } from '@/hooks/store';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 
 export default function Home() {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [errors, setErrors] = useState<Record<string, string[]> | null>(null);
-  const bottomSheetRef = useRef<BottomSheetType>(null);
+  const bottomSheetRef = useRef<forwardRefProps>(null);
 
-  const { user } = useStore();
+  const { user, token } = useStore();
   const router = useRouter();
   const { isFetching, refetch } = useGetReceipts(!!user);
 
@@ -28,7 +28,7 @@ export default function Home() {
             <RefreshControl refreshing={isFetching} onRefresh={refetch} enabled={!!user} />
           }
         >
-          {user ? (
+          {token ? (
             <UploadHome
               errors={errors}
               setErrors={setErrors}
@@ -42,12 +42,12 @@ export default function Home() {
             </Button>
           )}
         </ScrollView>
-        <UploadChoicesBottomSheet
-          bottomSheetRef={bottomSheetRef}
-          setErrors={setErrors}
-          setFile={setFile}
-        />
       </MainContainer>
+      <UploadChoicesBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        setErrors={setErrors}
+        setFile={setFile}
+      />
     </>
   );
 }

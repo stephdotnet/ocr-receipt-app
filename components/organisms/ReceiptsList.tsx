@@ -31,12 +31,12 @@ function ReceiptsList({ count, data }: ReceiptListProps) {
         return (
           <TouchableOpacity onPress={() => handleNavigate(receipt)} key={receipt.id}>
             <Box
-              borderColor="lightGrey"
+              borderColor="$gray10"
               borderWidth={1}
-              borderRadius={10}
-              my={1}
-              px={2}
-              py={2}
+              borderRadius="$5"
+              mb="$3"
+              px="$2"
+              py="$2"
               flexDirection="row"
               alignItems="center"
             >
@@ -46,7 +46,7 @@ function ReceiptsList({ count, data }: ReceiptListProps) {
                   {t('receipt.date_caption', {
                     date: parseAndFormatDate(receipt.invoice_date),
                   })}{' '}
-                  <Text variant="bold">{receipt.products?.length} produits</Text>
+                  <Text fontWeight="bold">{receipt.products?.length} produits</Text>
                 </Text>
               </Box>
               <Box>

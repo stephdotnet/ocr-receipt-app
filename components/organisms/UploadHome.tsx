@@ -3,13 +3,13 @@ import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Box, Text } from '@/components/atoms';
+import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { Receipt } from '@/types/Receipts';
 import { CustomAxiosError } from '@/utils/api/api';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
-import BottomSheetType from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
 import ReceiptsList from './ReceiptsList';
 
 interface props {
@@ -17,14 +17,13 @@ interface props {
   setErrors: (errors: Record<string, string[]> | null) => void;
   file: ImagePicker.ImagePickerAsset | null;
   setFile: (file: ImagePicker.ImagePickerAsset | null) => void;
-  bottomSheetRef: React.RefObject<BottomSheetType>;
+  bottomSheetRef: React.RefObject<forwardRefProps>;
 }
 
 export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: props) {
   const { progress, isLoading, mutate } = useUploadReceipt();
   const router = useRouter();
   const { t } = useTranslation();
-
   const handleFileUpload = () => {
     if (file) {
       setErrors(null);
@@ -44,18 +43,18 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
 
   return (
     <>
-      <Box style={{ marginTop: -50 }}>
+      <Box my="$-2">
         {!file ? (
           <UploadCTA bottomSheetRef={bottomSheetRef} />
         ) : (
           <>
-            <Box py={3} alignItems="center">
+            <Box py="$3" alignItems="center">
               <Text>{t('home.send.caption')}</Text>
             </Box>
             <Chip closeIcon="close" onClose={() => setFile(null)} style={{ marginBottom: 32 }}>
               {getFileName(file.uri)}
             </Chip>
-            <Box mb={2}>{isLoading && <ProgressBar progress={progress} />}</Box>
+            <Box mb="$2">{isLoading && <ProgressBar progress={progress} />}</Box>
             <Button
               mode="contained"
               loading={isLoading}
@@ -69,11 +68,13 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
         )}
       </Box>
       {errors?.file && (
-        <Box py={3} alignItems="center">
-          <Text>{dataGetValue(errors, 'file.0')}</Text>
+        <Box py="$3" alignItems="center">
+          <Text variant="error" textAlign="center">
+            {dataGetValue(errors, 'file.0')}
+          </Text>
         </Box>
       )}
-      <Box mt={2}>
+      <Box mt="$4">
         <ReceiptsList count={3} />
       </Box>
     </>

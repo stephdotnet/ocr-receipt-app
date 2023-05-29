@@ -17,7 +17,7 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
 
   return (
     <>
-      <Box mt={4}>
+      <Box mt="$4">
         <Text variant="title1" textAlign="center">
           {data.store.name}
         </Text>
@@ -27,7 +27,7 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
           date: parseAndFormatDate(data.invoice_date),
         })}
       </Text>
-      <Box mt={4} pb={4}>
+      <Box mt="$4" pb="$4">
         {data.products.map((data, id) => {
           return <ProductCard data={data} key={data.id} handlePress={onProductPress} />;
         })}

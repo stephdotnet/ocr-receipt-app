@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
+import { forwardRefProps } from '@/components/molecules/BottomSheet';
 
 interface useFilePickerFunction {
   (
     setErrors: (errors: any) => void,
     setFile: (file: any) => void,
-    bottomSheetRef: React.RefObject<BottomSheet>,
+    bottomSheetRef: React.RefObject<forwardRefProps>,
   ): {
     openPicker: () => Promise<void>;
     openCamera: () => Promise<void>;

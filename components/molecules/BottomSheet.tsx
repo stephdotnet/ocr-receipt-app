@@ -1,53 +1,56 @@
-import { forwardRef, useCallback, useMemo, useState } from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { BottomSheetDefaultBackdropProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import { Dimensions, LayoutChangeEvent, View } from 'react-native';
+import { Sheet } from 'tamagui';
 
-interface BottomSheetProps extends Omit<React.ComponentProps<typeof BottomSheet>, 'snapPoints'> {
-  snapPoints?: string[];
-  children: React.ReactNode;
+export interface forwardRefProps {
+  open: () => void;
+  close: () => void;
 }
 
-export default forwardRef(
-  ({ snapPoints, children, ...props }: BottomSheetProps, ref: React.Ref<BottomSheet>) => {
-    const [contentSnapPoints, setcontentSnapPoints] = useState<number[] | string[]>(['25%']);
+const BottomSheet: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<{
+    readonly children?: any;
+  }> &
+    React.RefAttributes<unknown>
+> = forwardRef(({ children }, ref) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [contentSnapPoints, setcontentSnapPoints] = useState<number[]>([33]);
 
-    const onContentLayout = useCallback(
-      (event: LayoutChangeEvent) => {
-        const contentHeight = event.nativeEvent.layout.height;
-        if (contentHeight > 0) {
-          setcontentSnapPoints([contentHeight + 50]);
-        }
-      },
-      [setcontentSnapPoints],
-    );
+  useImperativeHandle(ref, () => ({
+    open: () => setOpen(true),
+    close: () => setOpen(false),
+  }));
 
-    const bottomSheetSnapPoints = useMemo(() => {
-      if (!snapPoints) {
-        return contentSnapPoints;
+  const onContentLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const contentHeight = event.nativeEvent.layout.height + 100;
+      // Get height of screen
+      const screenHeight = Dimensions.get('window').height;
+
+      if (contentHeight > 0) {
+        const viewPercentHeight = Math.round((contentHeight / screenHeight) * 100);
+
+        setcontentSnapPoints([viewPercentHeight]);
       }
+    },
+    [setcontentSnapPoints],
+  );
 
-      return snapPoints;
-    }, [contentSnapPoints, snapPoints]);
-
-    const renderBackdrop = useCallback(
-      (props: BottomSheetDefaultBackdropProps) => (
-        <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} opacity={0.3} />
-      ),
-      [],
-    );
-
-    return (
-      <BottomSheet
-        ref={ref}
-        index={-1}
-        snapPoints={bottomSheetSnapPoints}
-        enablePanDownToClose={true}
-        backdropComponent={renderBackdrop}
-        {...props}
-      >
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={(open: boolean) => {
+        setOpen(open);
+      }}
+      snapPoints={contentSnapPoints}
+    >
+      <Sheet.Overlay />
+      <Sheet.Handle />
+      <Sheet.Frame flex={1} padding="$4" justifyContent="center" alignItems="center" space="$5">
         <View onLayout={onContentLayout}>{children}</View>
-      </BottomSheet>
-    );
-  },
-);
+      </Sheet.Frame>
+    </Sheet>
+  );
+});
+
+export default BottomSheet;

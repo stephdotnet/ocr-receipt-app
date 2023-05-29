@@ -1,26 +1,7 @@
 import { View } from 'react-native';
-import styled from 'styled-components';
-import {
-  BorderProps,
-  ColorProps,
-  FlexboxProps,
-  PositionProps,
-  SpaceProps,
-  border,
-  color,
-  flexbox,
-  position,
-  space,
-} from 'styled-system';
+import { GetProps, styled } from 'tamagui';
 
-export type BoxProps = SpaceProps & PositionProps & FlexboxProps & BorderProps & ColorProps;
-
-const Box = styled(View)<BoxProps>`
-  ${border}
-  ${color}
-  ${flexbox}
-  ${position}
-  ${space}
-`;
+const Box = styled(View);
 
 export default Box;
+export type BoxProps = GetProps<typeof Box>;

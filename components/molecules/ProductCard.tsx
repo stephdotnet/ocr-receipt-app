@@ -1,6 +1,6 @@
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Box, Text } from '@/components/atoms';
 import { Product } from '@/types/Receipts';
-import { Box, Text } from '../atoms';
 
 export default function ProductCard({
   data,
@@ -16,20 +16,20 @@ export default function ProductCard({
       }}
     >
       <Box
-        borderColor="lightGrey"
+        borderColor="$gray8"
         borderWidth={1}
-        borderRadius={10}
-        padding={2}
-        my={1}
+        borderRadius="$5"
+        padding="$2"
+        my="$1"
         flex={1}
         flexDirection="row"
         alignItems="center"
       >
-        <Box flex={1}>
+        <Box flex="$1">
           <Text>{data.name}</Text>
         </Box>
-        <Box ml={2}>
-          <Text variant="bold">{data.price} €</Text>
+        <Box ml="$2">
+          <Text fontWeight="bold">{Number(parseFloat(data.price).toFixed(2))} €</Text>
         </Box>
       </Box>
     </TouchableOpacity>

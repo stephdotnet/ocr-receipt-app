@@ -4,6 +4,7 @@ import { apiClient } from './api';
 
 const ENDPOINT_LOGIN = 'login';
 const ENDPOINT_LOGOUT = 'logout';
+const ENDPOINT_ME = 'me';
 
 interface AuthHttpResponse {
   data: {
@@ -54,7 +55,27 @@ const logout: LogoutFunction = async (token, options) => {
   return response.status === 200;
 };
 
+interface MeHttpResponse {
+  data: User;
+}
+
+interface MeFunction {
+  (token: string, options?: AuthRequestOptions): Promise<User>;
+}
+
+const me: MeFunction = async (token, options) => {
+  const response: AxiosResponse<MeHttpResponse> = await apiClient.get(ENDPOINT_ME, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    ...options,
+  });
+
+  return response.data.data;
+};
+
 export default {
   login,
   logout,
+  me,
 };
