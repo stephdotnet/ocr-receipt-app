@@ -19,9 +19,9 @@ export default function useUploadReceipt() {
       return receipts.send(file, {
         onUploadProgress: (progressEvent) => {
           if (progressEvent.total) {
-            setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total) / 100);
+            setProgress(Math.ceil((progressEvent.loaded * 100) / progressEvent.total));
           } else {
-            setProgress(1);
+            setProgress(100);
           }
         },
         token,
