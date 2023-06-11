@@ -44,7 +44,7 @@ export default function Layout() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHideAsync();
+        await SplashScreen.preventAutoHideAsync();
 
         const update = await Updates.checkForUpdateAsync();
 
@@ -52,7 +52,11 @@ export default function Layout() {
           await Updates.fetchUpdateAsync();
           await Updates.reloadAsync();
         }
+      } catch (error) {
+        console.log(error);
+      }
 
+      try {
         await cacheFonts();
         const token = await getToken();
 
@@ -60,10 +64,10 @@ export default function Layout() {
           setToken(token);
         }
       } catch (error) {
-        alert(error);
+        console.log(error);
       } finally {
         setIsReady(true);
-        SplashScreen.hideAsync();
+        await SplashScreen.hideAsync();
       }
     }
 
