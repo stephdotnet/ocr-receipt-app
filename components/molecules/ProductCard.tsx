@@ -25,7 +25,7 @@ export default function ProductCard({
         flexDirection="row"
         alignItems="center"
       >
-        <Box flex="$1">
+        <Box flex={1}>
           <Text>{data.name}</Text>
         </Box>
         <Box ml="$2">

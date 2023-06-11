@@ -28,8 +28,7 @@ const BottomSheet: React.ForwardRefExoticComponent<
       const screenHeight = Dimensions.get('window').height;
 
       if (contentHeight > 0) {
-        const viewPercentHeight = Math.round((contentHeight / screenHeight) * 100);
-
+        const viewPercentHeight = Math.floor((contentHeight / screenHeight) * 100);
         setcontentSnapPoints([viewPercentHeight]);
       }
     },

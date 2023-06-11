@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { Platform, StyleSheet } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import { Box, Text } from '@/components/atoms';
+import { Box, Button, Text } from '@/components/atoms';
 import { PasswordInput } from '@/components/atoms/PasswordInput';
 import MainContainer from '@/components/layout/MainContainer';
 import { useLogin } from '@/hooks/api/useAuth';
 import { useCancelQueries } from '@/hooks/api/useCancelQueries';
 import { CustomAxiosError } from '@/utils/api/api';
 import { useFormik } from 'formik';
+import { Input } from 'tamagui';
 
 interface formValues {
   email: string;
@@ -46,11 +46,12 @@ export default function Details() {
       <Box style={styles.form}>
         <Box mb="$3">
           <Box>
-            <TextInput
-              label={t('login.email')}
+            <Input
+              theme={formik.errors.email ? 'red' : 'green'}
+              color={formik.errors.email ? 'red' : 'green'}
               value={formik.values.email}
+              placeholder={t('login.email')}
               onChangeText={formik.handleChange('email')}
-              error={!!formik.errors.email}
               autoCapitalize="none"
             />
           </Box>
@@ -63,10 +64,11 @@ export default function Details() {
         <Box mb="$3">
           <Box>
             <PasswordInput
-              label={t('login.password')}
+              placeholder={t('login.password')}
               value={formik.values.password}
               onChangeText={formik.handleChange('password')}
-              error={!!formik.errors.password}
+              theme={formik.errors.password ? 'red' : 'green'}
+              color={formik.errors.password ? 'red' : 'green'}
             />
           </Box>
           {formik.errors.password && (
@@ -77,7 +79,7 @@ export default function Details() {
         </Box>
         <Box>
           <Button
-            mode="contained"
+            theme="green"
             loading={login.isLoading}
             disabled={login.isLoading}
             onPress={() => {

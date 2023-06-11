@@ -13,6 +13,7 @@ export default () => ({
       backgroundColor: '#ffffff',
     },
     assetBundlePatterns: ['**/*'],
+    jsEngine: 'hermes',
     ios: {
       supportsTablet: true,
     },
@@ -39,5 +40,18 @@ export default () => ({
     updates: {
       url: 'https://u.expo.dev/11c92cb4-2b07-4456-8db7-c19f0e3d677a',
     },
+    plugins: [
+      [
+        'expo-build-properties',
+        {
+          android: {
+            unstable_networkInspector: true,
+          },
+          ios: {
+            unstable_networkInspector: true,
+          },
+        },
+      ],
+    ],
   },
 });

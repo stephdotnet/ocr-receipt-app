@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { Box } from '@/components/atoms';
+import Button from '@/components/atoms/Button';
 import useFilePicker from '@/hooks/api/useFilePicker';
 import BottomSheet, { forwardRefProps } from './BottomSheet';
 
@@ -23,12 +23,12 @@ export const UploadChoicesBottomSheet = ({
     <BottomSheet ref={bottomSheetRef}>
       <Box py="$3" alignItems="center">
         <Box mb="$2">
-          <Button style={styles.button} mode="contained" onPress={openPicker}>
+          <Button style={styles.button} theme="green" onPress={openPicker}>
             {t('home.upload.from_gallery')}
           </Button>
         </Box>
         <Box>
-          <Button style={styles.button} mode="contained" onPress={openCamera}>
+          <Button style={styles.button} theme="green" onPress={openCamera}>
             {t('home.upload.from_camera')}
           </Button>
         </Box>

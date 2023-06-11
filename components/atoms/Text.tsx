@@ -2,6 +2,8 @@ import { Text } from 'react-native';
 import { GetProps, styled } from 'tamagui';
 
 const TextComponent = styled(Text, {
+  name: 'Text',
+  color: '$color',
   variants: {
     variant: {
       title1: {
@@ -26,4 +28,4 @@ const TextComponent = styled(Text, {
 });
 
 export default TextComponent;
-export type TextProps = GetProps<typeof TextComponent>;
+export type TextComponentProps = GetProps<typeof TextComponent>;

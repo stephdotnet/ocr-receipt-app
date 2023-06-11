@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { Button, Chip, ProgressBar } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import { Box, Text } from '@/components/atoms';
+import { Box, Button, Text } from '@/components/atoms';
+import Chip from '@/components/atoms/Chip';
 import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import UploadCTA from '@/components/molecules/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
@@ -10,6 +10,7 @@ import { Receipt } from '@/types/Receipts';
 import { CustomAxiosError } from '@/utils/api/api';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
+import { Progress } from 'tamagui';
 import ReceiptsList from './ReceiptsList';
 
 interface props {
@@ -51,15 +52,22 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
             <Box py="$3" alignItems="center">
               <Text>{t('home.send.caption')}</Text>
             </Box>
-            <Chip closeIcon="close" onClose={() => setFile(null)} style={{ marginBottom: 32 }}>
-              {getFileName(file.uri)}
-            </Chip>
-            <Box mb="$2">{isLoading && <ProgressBar progress={progress} />}</Box>
+            <Box mb="$3">
+              <Chip theme="green" onClose={() => setFile(null)}>
+                {getFileName(file.uri)}
+              </Chip>
+            </Box>
+            {isLoading && (
+              <Box mb="$4">
+                <Progress value={progress}>
+                  <Progress.Indicator animation={null} />
+                </Progress>
+              </Box>
+            )}
             <Button
-              mode="contained"
+              theme="green"
               loading={isLoading}
               disabled={isLoading}
-              contentStyle={{ flexDirection: 'row-reverse' }}
               onPress={handleFileUpload}
             >
               {t('home.send.cta')}
