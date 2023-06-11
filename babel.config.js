@@ -36,7 +36,6 @@ module.exports = function (api) {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       ],
-      'react-native-paper/babel',
       '@babel/plugin-proposal-export-namespace-from',
       'react-native-reanimated/plugin',
     ],
