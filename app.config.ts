@@ -52,6 +52,12 @@ export default () => ({
           },
         },
       ],
+      [
+        'expo-updates',
+        {
+          username: 'stephdotnet',
+        },
+      ],
     ],
   },
 });

@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import * as Updates from 'expo-updates';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AuthProvider } from '@/components/layout/AuthProvider';
 import HeaderRight from '@/components/layout/HeaderRight';
@@ -43,18 +44,30 @@ export default function Layout() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHideAsync();
+        await SplashScreen.preventAutoHideAsync();
 
+        const update = await Updates.checkForUpdateAsync();
+
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
         await cacheFonts();
-
         const token = await getToken();
 
         if (token) {
           setToken(token);
         }
+      } catch (error) {
+        console.log(error);
       } finally {
         setIsReady(true);
-        SplashScreen.hideAsync();
+        await SplashScreen.hideAsync();
       }
     }
 
