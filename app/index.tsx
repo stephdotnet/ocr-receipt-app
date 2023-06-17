@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
+import Button from '@/components/atoms/Button';
 import MainContainer from '@/components/layout/MainContainer';
 import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
@@ -37,7 +37,7 @@ export default function Home() {
               bottomSheetRef={bottomSheetRef}
             />
           ) : (
-            <Button mode="contained" onPress={() => router.push('login')}>
+            <Button theme="green" onPress={() => router.push('login')}>
               Login
             </Button>
           )}

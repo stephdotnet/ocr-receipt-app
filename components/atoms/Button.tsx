@@ -1,33 +1,22 @@
-import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
+import Text from '@/components/atoms/Text';
+import { useStore } from '@/hooks/store';
+import { Button, ButtonProps as ButtonBaseProps, Spinner, useTheme } from 'tamagui';
 
-interface ButtonPops {
+interface ButtonProps extends ButtonBaseProps {
+  loading?: boolean;
   children: React.ReactNode;
-  onPress?: (event: GestureResponderEvent) => void;
-  style?: object;
 }
 
-export default function Button({ children, onPress, style = {} }: ButtonPops) {
-  const onPressHandler = (event: GestureResponderEvent) => {
-    if (onPress) {
-      onPress(event);
-    }
-  };
+export default function ButtonComponent({ loading, children, ...props }: ButtonProps) {
+  const { theme: storeTheme } = useStore();
+  const theme = useTheme({ name: props.theme ?? storeTheme });
 
   return (
     <>
-      <TouchableOpacity onPress={onPressHandler} style={{ width: '100%' }}>
-        <View style={[styles.container, style]}>{children}</View>
-      </TouchableOpacity>
+      <Button {...props}>
+        <Text>{children}</Text>
+        {loading && <Spinner size="small" color={theme.color10.val} />}
+      </Button>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    borderRadius: 50,
-    padding: 15,
-    alignItems: 'center',
-  },
-  touchable: {},
-});

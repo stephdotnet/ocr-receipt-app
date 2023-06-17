@@ -1,4 +1,5 @@
 import { Platform, SafeAreaView, StyleSheet } from 'react-native';
+import { useTheme } from 'tamagui';
 
 interface MainContainerProps {
   children: React.ReactNode;
@@ -6,7 +7,13 @@ interface MainContainerProps {
 }
 
 export default function MainContainer({ children, style = {} }: MainContainerProps) {
-  return <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>;
+  const theme = useTheme();
+
+  return (
+    <SafeAreaView style={[styles.container, style, { backgroundColor: theme.background.val }]}>
+      {children}
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

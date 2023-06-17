@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider as PaperProvider } from 'react-native-paper';
 import * as Font from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import * as Updates from 'expo-updates';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AuthProvider } from '@/components/layout/AuthProvider';
 import HeaderRight from '@/components/layout/HeaderRight';
@@ -14,7 +14,7 @@ import { useStore } from '@/hooks/store';
 import i18nInit from '@/utils/localisation/i18n';
 import config from '@/utils/tamagui.config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TamaguiProvider, Theme } from 'tamagui';
+import { TamaguiProvider, Theme, useTheme } from 'tamagui';
 
 i18nInit();
 
@@ -44,23 +44,41 @@ export default function Layout() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHideAsync();
+        await SplashScreen.preventAutoHideAsync();
 
+        const update = await Updates.checkForUpdateAsync();
+
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
         await cacheFonts();
-
         const token = await getToken();
 
         if (token) {
           setToken(token);
         }
+      } catch (error) {
+        console.log(error);
       } finally {
         setIsReady(true);
-        SplashScreen.hideAsync();
+        await SplashScreen.hideAsync();
       }
     }
 
     loadResourcesAndDataAsync();
   }, []);
+
+  const { theme: themeSelected, setTheme } = useStore();
+
+  useEffect(() => {
+    setTheme(colorScheme === 'dark' ? 'dark' : 'light');
+  }, [colorScheme]);
 
   if (!isReady) {
     return null;
@@ -68,36 +86,14 @@ export default function Layout() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style={themeSelected === 'dark' ? 'light' : 'dark'} />
       <GestureHandlerRootView style={{ flex: 1, flexGrow: 1 }}>
         <TamaguiProvider config={config}>
-          <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
+          <Theme name={themeSelected}>
             <QueryClientProvider client={queryClient}>
-              <PaperProvider>
-                <AuthProvider>
-                  <Stack
-                    initialRouteName="index"
-                    screenOptions={{
-                      headerRight: () => <HeaderRight />,
-                      headerStyle: {
-                        backgroundColor: config.tokens.color.black.val,
-                      },
-                      headerTintColor: '#fff',
-                      headerTitleStyle: {
-                        fontWeight: 'bold',
-                      },
-                      contentStyle: {
-                        backgroundColor: config.tokens.color.gray10Light.val,
-                      },
-                    }}
-                  >
-                    <Stack.Screen name="index" options={{ title: 'Overview' }} />
-                    <Stack.Screen name="login" options={{ title: 'Login' }} />
-                    <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
-                    <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
-                  </Stack>
-                </AuthProvider>
-              </PaperProvider>
+              <AuthProvider>
+                <StackContainer />
+              </AuthProvider>
             </QueryClientProvider>
           </Theme>
         </TamaguiProvider>
@@ -105,3 +101,31 @@ export default function Layout() {
     </>
   );
 }
+
+const StackContainer = () => {
+  const theme = useTheme();
+
+  return (
+    <Stack
+      initialRouteName="index"
+      screenOptions={{
+        headerRight: () => <HeaderRight />,
+        headerStyle: {
+          backgroundColor: theme.background.val,
+        },
+        headerTintColor: theme.color.val,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        contentStyle: {
+          backgroundColor: theme.background.val,
+        },
+      }}
+    >
+      <Stack.Screen name="index" options={{ title: 'Overview' }} />
+      <Stack.Screen name="login" options={{ title: 'Login' }} />
+      <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
+      <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
+    </Stack>
+  );
+};

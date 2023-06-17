@@ -3,13 +3,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
+import Button from '@/components/atoms/Button';
 import Text from '@/components/atoms/Text';
 import { withReactQuery } from '@/components/molecules/ComponentLoader/ComponentLoader';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import { Receipt } from '@/types/Receipts';
 import { parseAndFormatDate } from '@/utils/dates';
 import { conditionnalSlice } from '@/utils/objects';
-import { Button } from '../atoms';
+import { useTheme } from 'tamagui';
 
 interface ReceiptListProps {
   data: Receipt[];
@@ -19,6 +20,7 @@ interface ReceiptListProps {
 
 function ReceiptsList({ count, data }: ReceiptListProps) {
   const router = useRouter();
+  const theme = useTheme();
   const { t } = useTranslation();
 
   const handleNavigate = (receipt: Receipt) => {
@@ -50,7 +52,7 @@ function ReceiptsList({ count, data }: ReceiptListProps) {
                 </Text>
               </Box>
               <Box>
-                <MaterialIcons name="arrow-right" size={24} color="black" />
+                <MaterialIcons name="arrow-right" size={24} color={theme.color.val} />
               </Box>
             </Box>
           </TouchableOpacity>

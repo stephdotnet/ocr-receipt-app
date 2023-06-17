@@ -2,16 +2,16 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
-import { Button, Dialog, Portal } from 'react-native-paper';
 import { useSearchParams } from 'expo-router';
 import { Box, Text } from '@/components/atoms';
+import Button from '@/components/atoms/Button';
 import MainContainer from '@/components/layout/MainContainer';
 import BottomSheet, { forwardRefProps } from '@/components/molecules/BottomSheet';
 import ReceiptDetails from '@/components/organisms/ReceiptDetails';
 import useDeleteProduct from '@/hooks/api/useDeleteProduct';
 import { useShowReceipt } from '@/hooks/api/useGetReceipts';
 import { Product } from '@/types/Receipts';
-import theme from '@/utils/theme';
+import { Dialog } from 'tamagui';
 
 type ReceiptSearchParams = Record<string, string>;
 
@@ -70,36 +70,54 @@ export default function ReceiptPage() {
       </ScrollView>
       <BottomSheet ref={bottomSheetRef}>
         <Box mt="$2">
-          <Text variant="title2" textAlign="center" color="black">
+          <Text variant="title2" textAlign="center">
             {selectedProduct?.name}
           </Text>
         </Box>
         <Box my="$3" alignItems="center">
           <Box>
-            <Button mode="outlined" textColor={theme.colors.error50} onPress={handleDeleteDialog}>
+            <Button theme="red" onPress={handleDeleteDialog}>
               {t('system.delete')}
             </Button>
           </Box>
         </Box>
       </BottomSheet>
-      <Portal>
-        <Dialog visible={showDialog} onDismiss={handleHideDialog}>
-          <Dialog.Title style={{ fontSize: 18 }}>{t('product.dialog.delete.title')}</Dialog.Title>
-          <Dialog.Content>
+      <Dialog open={showDialog}>
+        <Dialog.Portal>
+          <Dialog.Overlay
+            key="overlay"
+            animation="quick"
+            opacity={0.5}
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+            onPress={handleHideDialog}
+          />
+          <Dialog.Content
+            bordered
+            elevate
+            key="content"
+            animation={[
+              'quick',
+              {
+                opacity: {
+                  overshootClamping: true,
+                },
+              },
+            ]}
+            enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
+            exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+            space
+          >
+            <Dialog.Title style={{ fontSize: 18 }}>{t('product.dialog.delete.title')}</Dialog.Title>
             <Text>{t('product.dialog.delete.content')}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              textColor={theme.colors.error50}
-              style={styles.button}
-              onPress={handleDeleteConfirm}
-            >
+
+            <Button theme="red" onPress={handleDeleteConfirm}>
               {t('system.confirm')}
             </Button>
             <Button onPress={handleHideDialog}>{t('system.cancel')}</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
     </>
   );
 }
@@ -107,8 +125,5 @@ export default function ReceiptPage() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-  },
-  button: {
-    minHeight: 43,
   },
 });

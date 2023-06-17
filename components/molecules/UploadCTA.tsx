@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-native-paper';
 import { Box, Text } from '@/components/atoms';
+import Button from '@/components/atoms/Button';
 import { forwardRefProps } from '@/components/molecules/BottomSheet';
 import { useStore } from '@/hooks/store';
 
@@ -22,8 +22,8 @@ export default function UploadCTA({ bottomSheetRef }: UploadCTAProps) {
       <Box py="$3" alignItems="center">
         <Text>{t('home.caption')}</Text>
       </Box>
-      <Button mode="contained" onPress={openBottomSheet} disabled={!user}>
-        <Text fontWeight="bold">{t('home.upload.cta')}</Text>
+      <Button theme="green" disabled={!user} onPress={openBottomSheet}>
+        {t('home.upload.cta')}
       </Button>
     </>
   );
