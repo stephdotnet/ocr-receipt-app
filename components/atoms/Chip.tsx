@@ -4,7 +4,7 @@ import Text from '@/components/atoms/Text';
 import useTheme from '@/hooks/utils/useTheme';
 import { GetProps, ThemeableStack, styled } from 'tamagui';
 
-interface ChipProps extends GetProps<typeof ThemeableStack> {
+interface ChipProps extends Omit<GetProps<typeof ThemeableStack>> {
   children: React.ReactNode;
   onClose: () => void;
 }
