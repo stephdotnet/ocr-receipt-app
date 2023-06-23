@@ -4,14 +4,14 @@ import { useRouter } from 'expo-router';
 import { Box, Button, Text } from '@/components/atoms';
 import Chip from '@/components/atoms/Chip';
 import { forwardRefProps } from '@/components/molecules/BottomSheet';
-import UploadCTA from '@/components/molecules/UploadCTA';
+import ReceiptsList from '@/components/organisms/ReceiptsList';
+import UploadCTA from '@/components/pages/home/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';
 import { Receipt } from '@/types/Receipts';
 import { CustomAxiosError } from '@/utils/api/api';
 import { getFileName } from '@/utils/files';
 import { dataGetValue } from '@/utils/system';
 import { Progress } from 'tamagui';
-import ReceiptsList from './ReceiptsList';
 
 interface props {
   errors: Record<string, string[]> | null;

@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import Button from '@/components/atoms/Button';
 import MainContainer from '@/components/layout/MainContainer';
 import { forwardRefProps } from '@/components/molecules/BottomSheet';
-import { UploadChoicesBottomSheet } from '@/components/molecules/UploadChoicesBottomSheet';
-import UploadHome from '@/components/organisms/UploadHome';
+import { UploadChoicesBottomSheet } from '@/components/pages/home/UploadChoicesBottomSheet';
+import UploadHome from '@/components/pages/home/UploadHome';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import { useStore } from '@/hooks/store';
 

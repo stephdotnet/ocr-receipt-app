@@ -45,7 +45,7 @@ const BottomSheet: React.ForwardRefExoticComponent<
     >
       <Sheet.Overlay />
       <Sheet.Handle />
-      <Sheet.Frame flex={1} padding="$4" justifyContent="center" alignItems="center" space="$5">
+      <Sheet.Frame flex={1} padding="$4" alignItems="center" space="$5">
         <View onLayout={onContentLayout}>{children}</View>
       </Sheet.Frame>
     </Sheet>
