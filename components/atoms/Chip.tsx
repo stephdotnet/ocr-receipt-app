@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import useTheme from '@/hooks/utils/useTheme';
-import { GetProps, ThemeName, ThemeableStack, ThemeableStackProps, styled } from 'tamagui';
+import { ThemeName, ThemeableStack, ThemeableStackProps, styled } from 'tamagui';
 
 interface ChipProps extends ThemeableStackProps {
   children: React.ReactNode;
