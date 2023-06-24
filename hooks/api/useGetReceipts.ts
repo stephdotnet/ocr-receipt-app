@@ -18,7 +18,7 @@ export function getQueryKeyShow(id: string): QueryKey {
   return [QUERY_KEY_RECEIPT, parseInt(id, 10)];
 }
 
-export function useGetReceipts(enabled: boolean) {
+export function useGetReceipts(enabled: boolean = true) {
   const { token } = useStore();
   return useQuery<Receipt[], AxiosError>(
     getQueryKeyList(1),

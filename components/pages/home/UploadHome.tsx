@@ -54,7 +54,7 @@ export default function ({ errors, setErrors, file, setFile, bottomSheetRef }: p
             </Box>
             <Box mb="$3">
               <Chip theme="green" onClose={() => setFile(null)}>
-                {getFileName(file.uri)}
+                {getFileName(file?.uri)}
               </Chip>
             </Box>
             {isLoading && (
