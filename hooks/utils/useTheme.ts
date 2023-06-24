@@ -1,11 +1,12 @@
 import { useStore } from '@/hooks/store';
+import { useTheme } from '@tamagui/core';
 import { ThemeName } from '@tamagui/web/src/types';
-import { useTheme as useThemeBase } from 'tamagui';
 
-const useTheme = (themeName?: ThemeName) => {
+const useThemeExtended = (themeName?: ThemeName) => {
   const { theme: storeTheme } = useStore();
 
-  return useThemeBase(themeName ?? (storeTheme as ThemeName));
+  // @ts-ignore
+  return useTheme(themeName ?? storeTheme);
 };
 
-export default useTheme;
+export default useThemeExtended;

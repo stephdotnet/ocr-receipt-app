@@ -1,5 +1,4 @@
-import { Text } from 'react-native';
-import { GetProps, styled } from 'tamagui';
+import { GetProps, Text, styled } from 'tamagui';
 
 const TextComponent = styled(Text, {
   name: 'Text',
@@ -17,7 +16,7 @@ const TextComponent = styled(Text, {
       },
       thin: {
         fontSize: 14,
-        fontWeight: 300,
+        fontWeight: '300',
         fontFamily: 'InterLight',
       },
       error: {

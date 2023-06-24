@@ -2,9 +2,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
 import useTheme from '@/hooks/utils/useTheme';
-import { GetProps, ThemeableStack, styled } from 'tamagui';
+import { ThemeName, ThemeableStack, ThemeableStackProps, styled } from 'tamagui';
 
-interface ChipProps extends Omit<GetProps<typeof ThemeableStack>> {
+interface ChipProps extends ThemeableStackProps {
   children: React.ReactNode;
   onClose: () => void;
 }
@@ -22,24 +22,21 @@ const StyledCard = styled(ThemeableStack, {
   focusTheme: true,
 });
 
-const HighOrderStyledCard = StyledCard.styleable(
-  ({ children, onClose, ...props }: ChipProps, ref) => {
-    const theme = useTheme(props.theme);
+const HighOrderStyledCard = ({ children, onClose, ...props }: ChipProps): JSX.Element => {
+  const theme = useTheme(props.theme as ThemeName);
 
-    return (
-      <StyledCard {...props} onPress={onClose}>
-        <Box flexDirection="row" flex={1} alignItems="center">
-          <Box flex={1}>
-            <Text>{children}</Text>
-          </Box>
-          <Box>
-            <MaterialIcons name="close" size={24} color={theme.color10.val} />
-          </Box>
+  return (
+    <StyledCard {...props} onPress={onClose}>
+      <Box flexDirection="row" flex={1} alignItems="center">
+        <Box flex={1}>
+          <Text>{children}</Text>
         </Box>
-      </StyledCard>
-    );
-  },
-);
+        <Box>
+          <MaterialIcons name="close" size={24} color={theme.color10.val} />
+        </Box>
+      </Box>
+    </StyledCard>
+  );
+};
 
 export default HighOrderStyledCard;
-export type HighOrderStyledCardProps = GetProps<typeof HighOrderStyledCard>;

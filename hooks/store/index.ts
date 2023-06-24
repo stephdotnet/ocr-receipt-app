@@ -1,7 +1,8 @@
 import { User } from '@/types/User';
+import { ThemeName } from 'tamagui';
 import { create } from 'zustand';
 
-type theme = 'light' | 'dark';
+type theme = 'light' | 'dark' | ThemeName;
 
 interface Store {
   token: string | null;
