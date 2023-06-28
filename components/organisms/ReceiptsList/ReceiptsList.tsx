@@ -11,6 +11,7 @@ import { Receipt } from '@/types/Receipts';
 import { parseAndFormatDate } from '@/utils/dates';
 import { conditionnalSlice } from '@/utils/objects';
 import { useTheme } from 'tamagui';
+import ReceiptsListSkeleton from './ReceiptsListSkeleton';
 
 interface ReceiptListProps {
   data: Receipt[];
@@ -67,4 +68,4 @@ function ReceiptsList({ count, data }: ReceiptListProps) {
   );
 }
 
-export default withReactQuery(ReceiptsList, useGetReceipts);
+export default withReactQuery(ReceiptsList, useGetReceipts, ReceiptsListSkeleton);

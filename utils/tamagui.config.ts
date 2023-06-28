@@ -37,6 +37,7 @@ export const tokens = createTokens({
   },
   radius: {
     ...baseTokens.radius,
+    rounded: 1000,
   },
   zIndex: {
     ...baseTokens.zIndex,

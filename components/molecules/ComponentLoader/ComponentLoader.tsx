@@ -32,16 +32,24 @@ export default function ComponentLoader({
 export const withReactQuery = function <T extends object>(
   WrappedComponent: React.ComponentType<T>,
   fetchFunction: () => UseQueryResult<Receipt[], AxiosError<unknown, any>>,
-  loadingComponent?: JSX.Element,
-  errorComponent?: JSX.Element,
+  LoadingComponent?: React.ComponentType,
+  ErrorComponent?: React.ComponentType,
 ) {
   return function (props: any) {
     const { isLoading, isError, data } = fetchFunction();
 
     return isLoading ? (
-      loadingComponent ?? <LoadingDefaultComponent />
+      LoadingComponent ? (
+        <LoadingComponent />
+      ) : (
+        <LoadingDefaultComponent />
+      )
     ) : isError ? (
-      errorComponent ?? <ErrorDefaultComponent />
+      ErrorComponent ? (
+        ErrorComponent
+      ) : (
+        <ErrorDefaultComponent />
+      )
     ) : (
       <WrappedComponent {...props} data={data} />
     );
