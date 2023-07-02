@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { handleProductPressType } from '@/app/receipts/[id]';
 import Box from '@/components/atoms/Box';
 import Text from '@/components/atoms/Text';
-import { withLoadingState } from '@/components/molecules/ComponentLoader/ComponentLoader';
+import { withLoadingState } from '@/components/layout/ComponentLoader';
 import ProductCard from '@/components/molecules/ProductCard';
+import ReceiptDetailsSkeleton from '@/components/organisms/ReceiptDetails/ReceiptDetailsSkeleton';
 import { Receipt } from '@/types/Receipts';
 import { parseAndFormatDate } from '@/utils/dates';
 
@@ -36,4 +37,4 @@ function ReceiptDetails({ data, onProductPress }: ProductsListProps) {
   );
 }
 
-export default withLoadingState<ProductsListProps>(ReceiptDetails);
+export default withLoadingState<ProductsListProps>(ReceiptDetails, ReceiptDetailsSkeleton);

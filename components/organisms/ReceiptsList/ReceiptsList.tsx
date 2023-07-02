@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Box from '@/components/atoms/Box';
 import Button from '@/components/atoms/Button';
 import Text from '@/components/atoms/Text';
-import { withReactQuery } from '@/components/molecules/ComponentLoader/ComponentLoader';
+import { withReactQuery } from '@/components/layout/ComponentLoader';
 import { useGetReceipts } from '@/hooks/api/useGetReceipts';
 import { Receipt } from '@/types/Receipts';
 import { parseAndFormatDate } from '@/utils/dates';
@@ -13,13 +13,13 @@ import { conditionnalSlice } from '@/utils/objects';
 import { useTheme } from 'tamagui';
 import ReceiptsListSkeleton from './ReceiptsListSkeleton';
 
-interface ReceiptListProps {
+export interface ReceiptsListProps {
   data: Receipt[];
   count?: number;
   style?: any;
 }
 
-function ReceiptsList({ count, data }: ReceiptListProps) {
+function ReceiptsList({ count, data }: ReceiptsListProps) {
   const router = useRouter();
   const theme = useTheme();
   const { t } = useTranslation();

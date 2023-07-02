@@ -13,22 +13,6 @@ interface ComponentLoaderProps {
   errorComponent?: JSX.Element;
 }
 
-export default function ComponentLoader({
-  children,
-  isLoading,
-  hasError,
-  loadingComponent,
-  errorComponent,
-}: ComponentLoaderProps): JSX.Element {
-  return isLoading ? (
-    loadingComponent ?? <LoadingDefaultComponent />
-  ) : hasError ? (
-    errorComponent ?? <ErrorDefaultComponent />
-  ) : (
-    <>{children}</>
-  );
-}
-
 export const withReactQuery = function <T extends object>(
   WrappedComponent: React.ComponentType<T>,
   fetchFunction: () => UseQueryResult<Receipt[], AxiosError<unknown, any>>,
@@ -40,13 +24,13 @@ export const withReactQuery = function <T extends object>(
 
     return isLoading ? (
       LoadingComponent ? (
-        <LoadingComponent />
+        <LoadingComponent {...props} />
       ) : (
         <LoadingDefaultComponent />
       )
     ) : isError ? (
       ErrorComponent ? (
-        ErrorComponent
+        <ErrorComponent {...props} />
       ) : (
         <ErrorDefaultComponent />
       )
@@ -58,14 +42,22 @@ export const withReactQuery = function <T extends object>(
 
 export const withLoadingState = function <T extends object>(
   WrappedComponent: React.ComponentType<T>,
-  loadingComponent?: JSX.Element,
-  errorComponent?: JSX.Element,
+  LoadingComponent?: React.ComponentType,
+  ErrorComponent?: React.ComponentType,
 ) {
   return function (props: any) {
     return props.isLoading ? (
-      loadingComponent ?? <LoadingDefaultComponent />
+      LoadingComponent ? (
+        <LoadingComponent />
+      ) : (
+        <LoadingDefaultComponent />
+      )
     ) : props.hasError ? (
-      errorComponent ?? <ErrorDefaultComponent />
+      ErrorComponent ? (
+        <ErrorComponent />
+      ) : (
+        <ErrorDefaultComponent />
+      )
     ) : (
       <WrappedComponent {...(props as T)} />
     );
