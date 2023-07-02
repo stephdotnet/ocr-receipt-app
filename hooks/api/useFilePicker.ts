@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
-import { forwardRefProps } from '@/components/molecules/BottomSheet';
+import { forwardRefProps } from '@/components/layout/BottomSheet';
 
 interface useFilePickerFunction {
   (

@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Box, Button, Text } from '@/components/atoms';
 import Chip from '@/components/atoms/Chip';
-import { forwardRefProps } from '@/components/molecules/BottomSheet';
+import { forwardRefProps } from '@/components/layout/BottomSheet';
 import ReceiptsList from '@/components/organisms/ReceiptsList';
 import UploadCTA from '@/components/pages/home/UploadCTA';
 import useUploadReceipt from '@/hooks/api/useUploadReceipt';

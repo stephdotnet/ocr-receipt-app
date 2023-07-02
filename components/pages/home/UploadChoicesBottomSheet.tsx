@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Box } from '@/components/atoms';
 import Button from '@/components/atoms/Button';
-import BottomSheet, { forwardRefProps } from '@/components/molecules/BottomSheet';
+import BottomSheet, { forwardRefProps } from '@/components/layout/BottomSheet';
 import useFilePicker from '@/hooks/api/useFilePicker';
 
 interface UploadChoicesBottomSheetProps {
