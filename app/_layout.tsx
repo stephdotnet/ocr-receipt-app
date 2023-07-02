@@ -122,7 +122,7 @@ const StackContainer = () => {
         },
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'Overview' }} />
+      <Stack.Screen name="index" options={{ title: 'Home' }} />
       <Stack.Screen name="login" options={{ title: 'Login' }} />
       <Stack.Screen name="receipts/index" options={{ title: 'All receipts' }} />
       <Stack.Screen name="receipts/[id]" options={{ title: 'Receipt' }} />
